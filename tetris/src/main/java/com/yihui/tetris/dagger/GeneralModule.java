@@ -39,7 +39,8 @@ public class GeneralModule {
 
     @Provides
     @Singleton
-    Controller provideController(@NonNull final UIContent uiContent) {
+    Controller provideController(
+            @NonNull final UIContent uiContent) {
         return new ControllerImpl(uiContent);
     }
 
@@ -56,20 +57,5 @@ public class GeneralModule {
         return new ThreadPoolExecutor(3, 5,
                 60, TimeUnit.SECONDS,
                 new SynchronousQueue<>(true));
-    }
-
-    @Provides
-    @Singleton
-    ScheduledExecutorService provideScheduledExecutorService() {
-        return Executors.newSingleThreadScheduledExecutor();
-    }
-
-    @Provides
-    @Singleton
-    EventListenerManager provideEventListenerManager(
-            @NonNull final Controller controller,
-            @NonNull final ScheduledExecutorService executorService
-    ) {
-        return new EventListenerManager(controller, executorService);
     }
 }

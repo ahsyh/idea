@@ -35,6 +35,12 @@ public class ContentUtil {
         System.arraycopy(srcContent, 0, destContent, 0, PANEL_HEIGHT);
     }
 
+    public static void clearContent(long[] content) {
+        for (int i = 0; i< PANEL_HEIGHT; i++) {
+            content[i] = 0;
+        }
+    }
+
     public static void printContent(long[] content, int width, int height) {
         for (int i = 0; i < height; i++) {
             StringBuilder sb = new StringBuilder();

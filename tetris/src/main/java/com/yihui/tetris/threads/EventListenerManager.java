@@ -17,19 +17,8 @@ public class EventListenerManager {
     @NonNull final private ScheduledExecutorService executorService;
 
     public void start(long interval) {
-        controller.start();
-        executorService.scheduleAtFixedRate(() -> {
-            controller.onTimer();
-        }, interval, interval, TimeUnit.MILLISECONDS);
     }
 
     public void stop() {
-        executorService.shutdown();
-        try {
-            if (!executorService.isTerminated()) {
-                sleep(100);
-            }
-        } catch (InterruptedException e) {
-        }
     }
 }

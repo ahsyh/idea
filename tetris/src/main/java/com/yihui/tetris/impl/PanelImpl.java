@@ -37,7 +37,7 @@ public class PanelImpl implements Panel {
 
         for(; checkLine >= 0; checkLine--) {
             if ((content[checkLine] & FULL_LINE) == FULL_LINE) {
-                checkLine--;
+                content[checkLine] = 0;
             } else {
                 if (writeLine != checkLine) {
                     content[writeLine] = content[checkLine];

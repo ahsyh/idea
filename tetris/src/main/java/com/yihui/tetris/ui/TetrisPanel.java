@@ -5,6 +5,7 @@ import com.yihui.tetris.util.ContentUtil;
 import lombok.NonNull;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 
 import java.awt.*;
 
@@ -16,6 +17,8 @@ public class TetrisPanel extends JPanel {
     @NonNull private final long[] saveContent;
     @NonNull private final long[] currContent;
 
+    private boolean firstRun = true;
+
     private final static int BLOCK_SIZE = 50;
 
     public TetrisPanel(@NonNull final UIContent uiContent) {
@@ -25,13 +28,25 @@ public class TetrisPanel extends JPanel {
         setPreferredSize(new Dimension(BLOCK_SIZE * PANEL_WIDTH, BLOCK_SIZE * PANEL_HEIGHT));
     }
 
+    public void reset() {
+        firstRun = true;
+        ContentUtil.clearContent(saveContent);
+    }
+
     @Override
     public void paint(Graphics g) {
-        if (!uiContent.isRunning()) return;
-        System.out.println("TetrisPanel paint start, " + System.currentTimeMillis());
-
         Graphics2D g2D = (Graphics2D) g;
         g2D.setColor(new Color(0x9020F0));
+
+        System.out.println("TetrisPanel paint start, " + System.currentTimeMillis()
+                + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());
+        if (firstRun || !uiContent.isRunning()) {
+            paintEmptyPanel(g2D);
+            firstRun = false;
+            return;
+        }
+
+        System.out.println("TetrisPanel paint start, " + System.currentTimeMillis());
 
         prepCurrentContent(currContent);
         paintPanel(g2D);
@@ -40,6 +55,14 @@ public class TetrisPanel extends JPanel {
         System.out.println("TetrisPanel paint end, " + System.currentTimeMillis());
     }
 
+    private void paintEmptyPanel(Graphics2D g2D) {
+        System.out.println("TetrisPanel paint empty panel");
+        for (int x = 0; x < PANEL_WIDTH; x++) {
+            for (int y = 0; y < PANEL_HEIGHT; y++) {
+                drawRect(x, y, g2D, false);
+            }
+        }
+    }
     private void paintPanel(Graphics2D g2D) {
         for (int x = 0; x < PANEL_WIDTH; x++) {
             for (int y = 0; y < PANEL_HEIGHT; y++) {
@@ -66,6 +89,7 @@ public class TetrisPanel extends JPanel {
             g2D.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         } else {
             g2D.clearRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            g2D.drawRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         }
     }
 }

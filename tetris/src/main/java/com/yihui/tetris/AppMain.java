@@ -16,7 +16,6 @@ public class AppMain {
     @Inject protected Controller controller;
     @Inject protected UIContent uiContent;
     @Inject protected KeyHandler keyHandler;
-    @Inject protected EventListenerManager eventListenerManager;
     @Inject protected ThreadPoolExecutor executor;
 
     private AppMain() {
@@ -27,7 +26,7 @@ public class AppMain {
     private void run() {
         controller.setSpeed(Speed.LEVEL6);
         (new UIThread(controller, keyHandler, uiContent)).run();
-        eventListenerManager.start(controller.getSpeed().getInterval());
+        controller.start();
         System.out.println("height is: " + 1);
     }
 

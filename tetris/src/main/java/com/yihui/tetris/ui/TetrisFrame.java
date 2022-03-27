@@ -47,7 +47,8 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
 
     @Override
     public void reset() {
-
+        panel.reset();
+        panel.repaint();
     }
 
     @Override
@@ -59,6 +60,9 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
         int code = e.getKeyCode();
         System.out.println(" you pressed key code: " + code);
         switch(code) {
+            case 32:
+                keyHandler.onBottom();
+                break;
             case 37:
                 keyHandler.onLeft();
                 break;
@@ -68,11 +72,11 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
             case 38:
                 keyHandler.onRotateCCW();
                 break;
-            case 32:
+            case 40:
                 keyHandler.onRotateCW();
                 break;
-            case 40:
-                keyHandler.onBottom();
+            case 82:
+                keyHandler.onReset();
                 break;
             default:
                 break;

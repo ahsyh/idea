@@ -14,11 +14,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
 @RequiredArgsConstructor
 public class ControllerImpl implements Controller, KeyHandler {
     @NonNull private final UIContent uiContent;
+    private ScheduledExecutorService executorService;
 
     @Setter
     private UIEngine uiEngine;
@@ -27,31 +32,36 @@ public class ControllerImpl implements Controller, KeyHandler {
     @Setter
     private Speed speed;
 
-    @Override
-    public void onTimer() {
-        System.out.println("controll onTimer start, " + System.currentTimeMillis());
-        synchronized (uiContent) {
-            int x = uiContent.getBrickPositionX();
-            int y = uiContent.getBrickPositionY();
-            if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(),
-                    uiContent.getCurrent(), x, y + 1)) {
-                // touch bottom
-                ContentUtil.mergeBrick(uiContent.getPanel().getContent(),
-                        uiContent.getCurrent(), x, y);
-                uiContent.getPanel().cleanFullLine();
-                uiContent.setCurrent(uiContent.getNext());
-                uiContent.setNext(BrickUtil.getRandomBrick());
-                uiContent.setBrickPositionX(PANEL_WIDTH/2-2);
-                uiContent.setBrickPositionY(0);
-                System.out.println("controll onTimer, touch bottom. y: " + y);
-            } else {
-                uiContent.setBrickPositionY(y + 1);
-                System.out.println("controll onTimer, set y: " + y);
-            }
-        }
+    private boolean running = false;
 
-        uiEngine.display();
-        System.out.println("controll onTimer end, " + System.currentTimeMillis());
+    private boolean isCurrentConflict() {
+        return ContentUtil.isMergeCauseConflict(
+                uiContent.getPanel().getContent(),
+                uiContent.getCurrent(),
+                uiContent.getBrickPositionX(),
+                uiContent.getBrickPositionY());
+    }
+    /**
+     * Try move operation.
+     * Do the move if no conflict.
+     * Otherwise run the failed handling.
+     * @return true if move succeed
+     *         false if move would cause conflict
+     */
+    private boolean tryMove(
+            int x,
+            int y,
+            Runnable failedOperation) {
+        if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(),
+                uiContent.getCurrent(), x, y)) {
+            failedOperation.run();
+            return false;
+        } else {
+            uiContent.setBrickPositionX(x);
+            uiContent.setBrickPositionY(y);
+            System.out.println("controll onTimer, set y: " + y);
+            return true;
+        }
     }
 
     @Override
@@ -60,27 +70,33 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void start() {
-        Brick curr = BrickUtil.getRandomBrick();
-        Brick next = BrickUtil.getRandomBrick();
-
         synchronized (uiContent) {
-            uiContent.getPanel().reset();
-            uiContent.setCurrent(curr);
-            uiContent.setNext(next);
-            uiContent.setBrickPositionY(0);
-            uiContent.setBrickPositionX(PANEL_WIDTH/2-2);
+            uiContent.init();
             uiContent.setRunning(true);
         }
+        running = true;
+        uiEngine.reset();
+
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(() -> {
+            onTimer();
+        }, speed.getInterval(), speed.getInterval(), TimeUnit.MILLISECONDS);
 
         //uiEngine.display();
-        System.out.println(Thread.currentThread() + "controll onInit end, current index: " + curr.getIndex()
-                + ", rotation: " + curr.getRotation() + ", time: " + System.currentTimeMillis());
+        System.out.println(Thread.currentThread() + "controll onInit end, current index: "
+                + uiContent.getCurrent().getIndex() + ", rotation: "
+                + uiContent.getCurrent().getRotation() + ", time: " + System.currentTimeMillis());
 
     }
 
     @Override
     public void stop() {
-
+        synchronized (uiContent) {
+            uiContent.setRunning(false);
+            uiContent.getPanel().reset();
+        }
+        running = false;
+        executorService.shutdown();
     }
 
     @Override
@@ -94,14 +110,7 @@ public class ControllerImpl implements Controller, KeyHandler {
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
             int y = uiContent.getBrickPositionY();
-            x--;
-            if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(), uiContent.getCurrent(), x, y)) {
-                // touch bottom
-                System.out.println("controll onLeft, touch edge. x: " + x);
-            } else {
-                uiContent.setBrickPositionX(x);
-                System.out.println("controll onLeft, set x: " + x);
-            }
+            tryMove(x - 1, y, () -> { });
         }
 
         uiEngine.display();
@@ -114,14 +123,7 @@ public class ControllerImpl implements Controller, KeyHandler {
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
             int y = uiContent.getBrickPositionY();
-            x++;
-            if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(), uiContent.getCurrent(), x, y)) {
-                // touch bottom
-                System.out.println("controll onRight, touch edge. x: " + x);
-            } else {
-                uiContent.setBrickPositionX(x);
-                System.out.println("controll onRight, set x: " + x);
-            }
+            tryMove(x + 1, y, () -> { });
         }
 
         uiEngine.display();
@@ -133,29 +135,64 @@ public class ControllerImpl implements Controller, KeyHandler {
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
             int y = uiContent.getBrickPositionY();
-            do {
-                if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(),
-                        uiContent.getCurrent(), x, y + 1)) {
-                    // touch bottom
-                    ContentUtil.mergeBrick(uiContent.getPanel().getContent(),
-                            uiContent.getCurrent(), x, y);
-                    uiContent.getPanel().cleanFullLine();
-                    uiContent.setCurrent(uiContent.getNext());
-                    uiContent.setNext(BrickUtil.getRandomBrick());
-                    uiContent.setBrickPositionX(PANEL_WIDTH/2-2);
-                    uiContent.setBrickPositionY(0);
-                    System.out.println("controll onBottom, touch bottom. y: " + y);
-                    break;
-                } else {
-                    y++;
-                    System.out.println("controll onBottom, set y: " + y);
-                }
-            } while (true);
+            while (tryMove(x, y + 1, () -> {})) {
+                y++;
+            }
+
+            finishCurrentBrick(x, y);
+        }
+
+        if (isCurrentConflict()) {
+            stop();
+            System.out.println("controll onTimer end with game over, " + System.currentTimeMillis());
         }
 
         uiEngine.display();
         System.out.println("controll onTimer end, " + System.currentTimeMillis());
+    }
 
+    @Override
+    public void onTimer() {
+        if (!running) return;
+
+        System.out.println("controll onTimer start, " + System.currentTimeMillis());
+        synchronized (uiContent) {
+            int x = uiContent.getBrickPositionX();
+            int y = uiContent.getBrickPositionY();
+            tryMove(x, y + 1, () -> {
+                finishCurrentBrick(x, y);
+            });
+        }
+
+        if (isCurrentConflict()) {
+            stop();
+            System.out.println("controll onTimer end with game over, " + System.currentTimeMillis());
+        }
+
+        uiEngine.display();
+
+        System.out.println("controll onTimer end, " + System.currentTimeMillis());
+    }
+
+    private void finishCurrentBrick(int x, int y) {
+        ContentUtil.mergeBrick(uiContent.getPanel().getContent(),
+                uiContent.getCurrent(), x, y);
+        uiContent.getPanel().cleanFullLine();
+        uiContent.nextStep();
+    }
+
+    private boolean tryRotate(
+            int x,
+            int y,
+            Brick b) {
+        if (ContentUtil.isMergeCauseConflict(
+                uiContent.getPanel().getContent(),
+                b, x, y)) {
+            return false;
+        } else {
+            uiContent.setCurrent(b);
+            return true;
+        }
     }
 
     @Override
@@ -164,15 +201,9 @@ public class ControllerImpl implements Controller, KeyHandler {
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
             int y = uiContent.getBrickPositionY();
-
             Brick b = uiContent.getCurrent().getRotate(RotateDirection.ClockWise);
-            if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(), b, x, y)) {
-                // touch bottom
-                System.out.println("controll onRotateCW, touch edge. x: " + x);
-            } else {
-                uiContent.getCurrent().rotate(RotateDirection.ClockWise);
-                System.out.println("controll onRotateCW, cc rotated ");
-            }
+
+            tryRotate(x, y, b);
         }
 
         uiEngine.display();
@@ -181,6 +212,21 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onRotateCCW() {
+        System.out.println("controll onRotateCW start, " + System.currentTimeMillis());
+        synchronized (uiContent) {
+            int x = uiContent.getBrickPositionX();
+            int y = uiContent.getBrickPositionY();
+            Brick b = uiContent.getCurrent().getRotate(RotateDirection.CounterClockWise);
 
+            tryRotate(x, y, b);
+        }
+
+        uiEngine.display();
+        System.out.println("controll onRotateCW end, " + System.currentTimeMillis());
+    }
+
+    @Override
+    public void onReset() {
+        start();
     }
 }

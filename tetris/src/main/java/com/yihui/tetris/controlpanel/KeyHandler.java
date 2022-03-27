@@ -7,4 +7,5 @@ public interface KeyHandler {
     void onBottom();
     void onRotateCW();
     void onRotateCCW();
+    void onReset();
 }
