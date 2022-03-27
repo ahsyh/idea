@@ -56,6 +56,10 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onInit() {
+    }
+
+    @Override
+    public void start() {
         Brick curr = BrickUtil.getRandomBrick();
         Brick next = BrickUtil.getRandomBrick();
 
@@ -65,15 +69,12 @@ public class ControllerImpl implements Controller, KeyHandler {
             uiContent.setNext(next);
             uiContent.setBrickPositionY(0);
             uiContent.setBrickPositionX(PANEL_WIDTH/2-2);
+            uiContent.setRunning(true);
         }
 
         //uiEngine.display();
         System.out.println(Thread.currentThread() + "controll onInit end, current index: " + curr.getIndex()
                 + ", rotation: " + curr.getRotation() + ", time: " + System.currentTimeMillis());
-    }
-
-    @Override
-    public void start() {
 
     }
 

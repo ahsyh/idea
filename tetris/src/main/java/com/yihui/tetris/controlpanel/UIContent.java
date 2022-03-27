@@ -9,4 +9,5 @@ public class UIContent {
     private int brickPositionX;
     private int brickPositionY;
     private Brick next;
+    private boolean running;
 }

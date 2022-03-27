@@ -6,6 +6,13 @@ import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
 public class ContentUtil {
+    public static boolean isBitAtPositionEqual(long[] src, long[] dest, int x, int y) {
+        int bitSrc = getBitAtPosition(src, x, y);
+        int bitDest = getBitAtPosition(dest, x, y);
+
+        return bitDest == bitSrc;
+    }
+
     public static int getBitAtPosition(long[] content, int x, int y) {
         if ((content[y] & ((long)0x1) << x) != 0) {
             return 1;

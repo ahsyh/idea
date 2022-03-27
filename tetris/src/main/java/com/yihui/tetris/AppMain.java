@@ -26,7 +26,6 @@ public class AppMain {
 
     private void run() {
         controller.setSpeed(Speed.LEVEL6);
-        //executor.submit(new UIThread(controller, keyHandler, uiContent));
         (new UIThread(controller, keyHandler, uiContent)).run();
         eventListenerManager.start(controller.getSpeed().getInterval());
         System.out.println("height is: " + 1);

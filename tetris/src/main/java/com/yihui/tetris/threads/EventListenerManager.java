@@ -17,6 +17,7 @@ public class EventListenerManager {
     @NonNull final private ScheduledExecutorService executorService;
 
     public void start(long interval) {
+        controller.start();
         executorService.scheduleAtFixedRate(() -> {
             controller.onTimer();
         }, interval, interval, TimeUnit.MILLISECONDS);

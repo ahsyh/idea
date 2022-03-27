@@ -30,7 +30,6 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
 
     public void init() {
         controller.setUiEngine(this);
-        controller.onInit();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panel);
