@@ -9,7 +9,7 @@ public interface Controller {
 
     // Event
     void onTimer();
-    void onInit();
+    void init();
     void start();
     void stop();
     void reset();

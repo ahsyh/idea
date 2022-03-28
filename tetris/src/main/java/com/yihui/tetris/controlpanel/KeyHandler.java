@@ -8,4 +8,6 @@ public interface KeyHandler {
     void onRotateCW();
     void onRotateCCW();
     void onReset();
+    void onSpeedUp();
+    void onSlowDown();
 }

@@ -13,17 +13,10 @@ public class UIThread implements Runnable {
     @NonNull private final KeyHandler keyHandler;
     @NonNull private final UIContent uiContent;
 
-    private void doWork() throws InterruptedException {
-        TetrisFrame frame = new TetrisFrame(controller, keyHandler, uiContent);
-        frame.init();
-    }
-
     @Override
     public void run() {
-        try {
-            doWork();
-        } catch (InterruptedException e) {
-            System.out.print("meet with interruption: " + e);
-        }
+        TetrisFrame frame = new TetrisFrame(controller, keyHandler, uiContent);
+        frame.init();
+        frame.display();
     }
 }

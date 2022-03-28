@@ -65,28 +65,26 @@ public class ControllerImpl implements Controller, KeyHandler {
     }
 
     @Override
-    public void onInit() {
+    public void init() {
+        uiEngine.reset();
     }
 
     @Override
     public void start() {
-        synchronized (uiContent) {
-            uiContent.init();
-            uiContent.setRunning(true);
-        }
-        running = true;
-        uiEngine.reset();
-
         executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(() -> {
-            onTimer();
-        }, speed.getInterval(), speed.getInterval(), TimeUnit.MILLISECONDS);
 
-        //uiEngine.display();
-        System.out.println(Thread.currentThread() + "controll onInit end, current index: "
-                + uiContent.getCurrent().getIndex() + ", rotation: "
-                + uiContent.getCurrent().getRotation() + ", time: " + System.currentTimeMillis());
+        executorService.schedule(() -> {
+            synchronized (uiContent) {
+                uiContent.init();
+                uiContent.setRunning(true);
+            }
+            running = true;
+        }, Speed.LEVEL10.getInterval() / 2, TimeUnit.MILLISECONDS);
 
+        executorService.schedule(this::onTimer, speed.getInterval(), TimeUnit.MILLISECONDS);
+
+        System.out.println(Thread.currentThread() + "controll start end, current index: "
+                + System.currentTimeMillis());
     }
 
     @Override
@@ -99,9 +97,13 @@ public class ControllerImpl implements Controller, KeyHandler {
         executorService.shutdown();
     }
 
+    private void next() {
+        executorService.schedule(this::onTimer, speed.getInterval(), TimeUnit.MILLISECONDS);
+    }
+
     @Override
     public void reset() {
-
+        uiEngine.reset();
     }
 
     @Override
@@ -167,6 +169,8 @@ public class ControllerImpl implements Controller, KeyHandler {
         if (isCurrentConflict()) {
             stop();
             System.out.println("controll onTimer end with game over, " + System.currentTimeMillis());
+        } else {
+            next();
         }
 
         uiEngine.display();
@@ -227,6 +231,21 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onReset() {
+        reset();
         start();
+    }
+
+    @Override
+    public void onSpeedUp() {
+        System.out.println("current speed: " + speed);
+        speed = speed.next();
+        System.out.println("new speed: " + speed);
+    }
+
+    @Override
+    public void onSlowDown() {
+        System.out.println("current speed: " + speed);
+        speed = speed.prev();
+        System.out.println("new speed: " + speed);
     }
 }

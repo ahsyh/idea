@@ -43,15 +43,14 @@ public class TetrisPanel extends JPanel {
         if (firstRun || !uiContent.isRunning()) {
             paintEmptyPanel(g2D);
             firstRun = false;
+            System.out.println("TetrisPanel paint end with empty, " + System.currentTimeMillis());
             return;
         }
 
-        System.out.println("TetrisPanel paint start, " + System.currentTimeMillis());
-
         prepCurrentContent(currContent);
         paintPanel(g2D);
-
         ContentUtil.copyContent(currContent, saveContent);
+
         System.out.println("TetrisPanel paint end, " + System.currentTimeMillis());
     }
 

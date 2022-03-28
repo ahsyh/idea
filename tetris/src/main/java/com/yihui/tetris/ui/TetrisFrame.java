@@ -34,6 +34,7 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panel);
         pack();
+
         setLayout(null);
         addKeyListener(this);
         setLocationRelativeTo(null);
@@ -78,6 +79,11 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
             case 82:
                 keyHandler.onReset();
                 break;
+            case 65:
+                keyHandler.onSpeedUp();
+                break;
+            case 83:
+                keyHandler.onSlowDown();
             default:
                 break;
         }
