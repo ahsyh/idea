@@ -46,7 +46,16 @@ public class BrickImpl implements Brick {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int bit = ContentUtil.getBitAtPosition(content, j, i);
-                ContentUtil.setBitAtPosition(newContent, height - i - 1, j, bit);
+                switch (r) {
+                    case ClockWise:
+                        ContentUtil.setBitAtPosition(newContent, height - i - 1, j, bit);
+                        break;
+                    case CounterClockWise:
+                        ContentUtil.setBitAtPosition(newContent, i, width - j - 1, bit);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
