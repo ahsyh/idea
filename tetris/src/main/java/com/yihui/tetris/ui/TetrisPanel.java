@@ -14,23 +14,21 @@ import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
 public class TetrisPanel extends JPanel {
     @NonNull private final UIContent uiContent;
-    @NonNull private final long[] saveContent;
     @NonNull private final long[] currContent;
 
     private boolean firstRun = true;
 
-    private final static int BLOCK_SIZE = 50;
+    private final static int BLOCK_SIZE = 30;
 
     public TetrisPanel(@NonNull final UIContent uiContent) {
         this.uiContent = uiContent;
-        this.saveContent = new long[PANEL_HEIGHT];
         this.currContent = new long[PANEL_HEIGHT];
         setPreferredSize(new Dimension(BLOCK_SIZE * PANEL_WIDTH, BLOCK_SIZE * PANEL_HEIGHT));
     }
 
     public void reset() {
         firstRun = true;
-        ContentUtil.clearContent(saveContent);
+        ContentUtil.clearContent(currContent);
     }
 
     @Override
@@ -41,33 +39,20 @@ public class TetrisPanel extends JPanel {
         System.out.println("TetrisPanel paint start, " + System.currentTimeMillis()
                 + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());
         if (firstRun || !uiContent.isRunning()) {
-            paintEmptyPanel(g2D);
             firstRun = false;
-            System.out.println("TetrisPanel paint end with empty, " + System.currentTimeMillis());
-            return;
+            ContentUtil.clearContent(currContent);
+        } else {
+            prepCurrentContent(currContent);
         }
 
-        prepCurrentContent(currContent);
         paintPanel(g2D);
-        ContentUtil.copyContent(currContent, saveContent);
-
         System.out.println("TetrisPanel paint end, " + System.currentTimeMillis());
     }
 
-    private void paintEmptyPanel(Graphics2D g2D) {
-        System.out.println("TetrisPanel paint empty panel");
-        for (int x = 0; x < PANEL_WIDTH; x++) {
-            for (int y = 0; y < PANEL_HEIGHT; y++) {
-                drawRect(x, y, g2D, false);
-            }
-        }
-    }
     private void paintPanel(Graphics2D g2D) {
         for (int x = 0; x < PANEL_WIDTH; x++) {
             for (int y = 0; y < PANEL_HEIGHT; y++) {
-                if (!ContentUtil.isBitAtPositionEqual(saveContent, currContent, x, y)) {
-                    drawRect(x, y, g2D, ContentUtil.getBitAtPosition(currContent, x, y) != 0);
-                }
+                drawRect(x, y, g2D, ContentUtil.getBitAtPosition(currContent, x, y) != 0);
             }
         }
     }

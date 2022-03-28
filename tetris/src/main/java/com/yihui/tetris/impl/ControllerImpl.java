@@ -83,7 +83,7 @@ public class ControllerImpl implements Controller, KeyHandler {
 
         executorService.schedule(this::onTimer, speed.getInterval(), TimeUnit.MILLISECONDS);
 
-        System.out.println(Thread.currentThread() + "controll start end, current index: "
+        System.out.println(Thread.currentThread() + "controll start end, "
                 + System.currentTimeMillis());
     }
 
