@@ -25,11 +25,8 @@ public class AppMain {
 
     private void run() {
         controller.setSpeed(Speed.LEVEL1);
-        System.out.println("main before run UI thread, " + System.currentTimeMillis());
         (new UIThread(controller, keyHandler, uiContent)).run();
-        System.out.println("main before controller init, " + System.currentTimeMillis());
         controller.init();
-        System.out.println("main before controller start, " + System.currentTimeMillis());
         controller.start();
         System.out.println("main controller started, " + System.currentTimeMillis());
     }
