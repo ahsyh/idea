@@ -12,7 +12,6 @@ import com.yihui.tetris.dagger.DaggerGeneralComponent;
 import com.yihui.tetris.threads.UIThread;
 
 import javax.inject.Inject;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class AppMain {
     @Inject protected Controller controller;
