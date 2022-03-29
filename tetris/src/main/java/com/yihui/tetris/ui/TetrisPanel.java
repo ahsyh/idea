@@ -9,6 +9,7 @@ import javax.swing.text.AbstractDocument;
 
 import java.awt.*;
 
+import static com.yihui.tetris.AppMain.logger;
 import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
@@ -36,7 +37,7 @@ public class TetrisPanel extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         g2D.setColor(new Color(0x081D65));
 
-        System.out.println("TetrisPanel paint start, " + System.currentTimeMillis()
+        logger.warn("TetrisPanel paint start, " + System.currentTimeMillis()
                 + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());
         if (firstRun || !uiContent.isRunning()) {
             firstRun = false;
@@ -46,7 +47,7 @@ public class TetrisPanel extends JPanel {
         }
 
         paintPanel(g2D);
-        System.out.println("TetrisPanel paint end, " + System.currentTimeMillis());
+        logger.warn("TetrisPanel paint end, " + System.currentTimeMillis());
     }
 
     private void paintPanel(Graphics2D g2D) {
@@ -62,7 +63,7 @@ public class TetrisPanel extends JPanel {
             ContentUtil.copyContent(uiContent.getPanel().getContent(), content);
             ContentUtil.mergeBrick(content, uiContent.getCurrent(),
                     uiContent.getBrickPositionX(), uiContent.getBrickPositionY());
-            System.out.println("TetrisPanel paint, curr index: " + uiContent.getCurrent().getIndex()
+            logger.warn("TetrisPanel paint, curr index: " + uiContent.getCurrent().getIndex()
                     + ", rotation: " + uiContent.getCurrent().getRotation());
         }
 

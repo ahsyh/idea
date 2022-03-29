@@ -6,6 +6,8 @@ import com.yihui.tetris.util.BrickUtil;
 import com.yihui.tetris.util.ContentUtil;
 import org.junit.jupiter.api.Test;
 
+import static com.yihui.tetris.AppMain.logger;
+
 public class BrickImplTest {
     @Test
     public void test_rotation() {
@@ -17,11 +19,11 @@ public class BrickImplTest {
     private void test_rotation_once() {
         // precondition
         Brick b = BrickUtil.getRandomBrick();
-        System.out.println("origin brick:");
+        logger.warn("origin brick:");
         ContentUtil.printContent(b.getContent(), b.getWidth(), b.getHeight());
         b.rotate(RotateDirection.ClockWise);
-        System.out.println("rotated brick:");
+        logger.warn("rotated brick:");
         ContentUtil.printContent(b.getContent(), b.getWidth(), b.getHeight());
-        System.out.println("---------------------------------------------");
+        logger.warn("---------------------------------------------");
     }
 }

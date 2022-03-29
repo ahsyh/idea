@@ -8,3 +8,4 @@ SPACE: touch bottom
 R: reset
 A: speed up
 S: slow down
+P: pause

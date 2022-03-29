@@ -3,6 +3,7 @@ package com.yihui.tetris.util;
 import com.yihui.tetris.controlpanel.Brick;
 import org.junit.jupiter.api.Test;
 
+import static com.yihui.tetris.AppMain.logger;
 import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,15 +23,15 @@ public class ContentUtilTest {
         Brick b = BrickUtil.getRandomBrick();
         int x = ((int)(Math.random() * 1000)) % PANEL_WIDTH;
         int y = ((int)(Math.random() * 1000)) % PANEL_HEIGHT;
-        System.out.println("Put brick to:" + x + ", " + y);
-        System.out.println("origin brick:");
+        logger.warn("Put brick to:" + x + ", " + y);
+        logger.warn("origin brick:");
         ContentUtil.printContent(b.getContent(), b.getWidth(), b.getHeight());
         if (ContentUtil.isMergeCauseConflict(content, b, x, y)) {
-            System.out.println("Found conflict, cannot merge");
+            logger.warn("Found conflict, cannot merge");
             return;
         }
         ContentUtil.mergeBrick(content, b, x, y);
-        System.out.println("panel after merge:");
+        logger.warn("panel after merge:");
         ContentUtil.printContent(content, PANEL_WIDTH, PANEL_HEIGHT);
     }
 

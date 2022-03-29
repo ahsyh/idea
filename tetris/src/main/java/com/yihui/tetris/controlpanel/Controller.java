@@ -7,10 +7,9 @@ public interface Controller {
     void setUiEngine(@NonNull final UIEngine uiEngine);
 
     // Event
-    void onTimer();
     void init();
     void start();
     void stop();
     void reset();
-
+    void onTimer();
 }

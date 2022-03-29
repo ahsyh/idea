@@ -2,6 +2,7 @@ package com.yihui.tetris.util;
 
 import com.yihui.tetris.controlpanel.Brick;
 
+import static com.yihui.tetris.AppMain.logger;
 import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
@@ -51,7 +52,7 @@ public class ContentUtil {
                     sb.append("_");
                 }
             }
-            System.out.println(sb.toString());
+            logger.warn(sb.toString());
         }
     }
 

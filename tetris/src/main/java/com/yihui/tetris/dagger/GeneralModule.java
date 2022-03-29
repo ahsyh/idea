@@ -47,15 +47,14 @@ public class GeneralModule {
     @Provides
     @Singleton
     KeyHandler provideKeyHandler(@NonNull final Controller controller) {
-        ControllerImpl r = (ControllerImpl) controller;
-        return (KeyHandler)r;
+        return (ControllerImpl) controller;
     }
 
-    @Provides
-    @Singleton
-    ThreadPoolExecutor provideExecutor() {
-        return new ThreadPoolExecutor(3, 5,
-                60, TimeUnit.SECONDS,
-                new SynchronousQueue<>(true));
-    }
+//    @Provides
+//    @Singleton
+//    ThreadPoolExecutor provideExecutor() {
+//        return new ThreadPoolExecutor(3, 5,
+//                60, TimeUnit.SECONDS,
+//                new SynchronousQueue<>(true));
+//    }
 }

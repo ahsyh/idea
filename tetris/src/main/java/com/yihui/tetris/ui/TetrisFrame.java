@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import static com.yihui.tetris.AppMain.logger;
+
 public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
     @NonNull private final Controller controller;
     @NonNull private final KeyHandler keyHandler;
@@ -59,7 +61,7 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        System.out.println(" you pressed key code: " + code);
+        logger.warn(" you pressed key code: " + code);
         switch(code) {
             case 32:
                 keyHandler.onBottom();
