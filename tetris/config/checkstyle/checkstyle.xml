@@ -59,9 +59,6 @@
     <!-- Checks for Size Violations.                    -->
     <!-- See https://checkstyle.org/config_sizes.html -->
     <module name="FileLength"/>
-    <module name="LineLength">
-        <property name="fileExtensions" value="java"/>
-    </module>
 
     <!-- Checks for whitespace                               -->
     <!-- See https://checkstyle.org/config_whitespace.html -->
@@ -87,12 +84,10 @@
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See https://checkstyle.org/config_javadoc.html -->
-        <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>
         <module name="JavadocVariable"/>
         <module name="JavadocStyle"/>
-        <module name="MissingJavadocMethod"/>
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See https://checkstyle.org/config_naming.html -->
@@ -173,13 +168,6 @@
         <module name="FinalParameters"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
-
-        <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
-        <module name="SuppressionXpathFilter">
-            <property name="file" value="${org.checkstyle.sun.suppressionxpathfilter.config}"
-                      default="checkstyle-xpath-suppressions.xml" />
-            <property name="optional" value="true"/>
-        </module>
 
     </module>
 </module>
