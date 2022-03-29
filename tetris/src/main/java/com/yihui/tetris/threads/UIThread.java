@@ -7,8 +7,11 @@ import com.yihui.tetris.ui.TetrisFrame;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ *
+ */
 @RequiredArgsConstructor
-public class UIThread implements Runnable {
+public final class UIThread implements Runnable {
     @NonNull private final Controller controller;
     @NonNull private final KeyHandler keyHandler;
     @NonNull private final UIContent uiContent;
