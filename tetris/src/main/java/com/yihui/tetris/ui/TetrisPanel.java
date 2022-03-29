@@ -18,7 +18,7 @@ public class TetrisPanel extends JPanel {
 
     private boolean firstRun = true;
 
-    private final static int BLOCK_SIZE = 30;
+    private final static int BLOCK_SIZE = 40;
 
     public TetrisPanel(@NonNull final UIContent uiContent) {
         this.uiContent = uiContent;
@@ -34,7 +34,7 @@ public class TetrisPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
-        g2D.setColor(new Color(0x9020F0));
+        g2D.setColor(new Color(0x081D65));
 
         System.out.println("TetrisPanel paint start, " + System.currentTimeMillis()
                 + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());

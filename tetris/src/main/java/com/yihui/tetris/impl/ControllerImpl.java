@@ -28,7 +28,6 @@ public class ControllerImpl implements Controller, KeyHandler {
     @Setter
     private UIEngine uiEngine;
 
-    @Getter
     @Setter
     private Speed speed;
 
@@ -108,6 +107,8 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onLeft() {
+        if (!running) return;
+
         System.out.println("controll onLeft start, " + System.currentTimeMillis());
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
@@ -121,6 +122,8 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onRight() {
+        if (!running) return;
+
         System.out.println("controll onRight start, " + System.currentTimeMillis());
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
@@ -133,6 +136,8 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onBottom() {
+        if (!running) return;
+
         System.out.println("controll onBottom start, " + System.currentTimeMillis());
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
@@ -201,6 +206,8 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onRotateCW() {
+        if (!running) return;
+
         System.out.println("controll onRotateCW start, " + System.currentTimeMillis());
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
@@ -216,6 +223,8 @@ public class ControllerImpl implements Controller, KeyHandler {
 
     @Override
     public void onRotateCCW() {
+        if (!running) return;
+
         System.out.println("controll onRotateCW start, " + System.currentTimeMillis());
         synchronized (uiContent) {
             int x = uiContent.getBrickPositionX();
@@ -233,6 +242,14 @@ public class ControllerImpl implements Controller, KeyHandler {
     public void onReset() {
         reset();
         start();
+    }
+
+    @Override
+    public void onPause() {
+        running = !running;
+        if (running) {
+            next();
+        }
     }
 
     @Override

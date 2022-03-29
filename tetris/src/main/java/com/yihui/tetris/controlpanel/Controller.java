@@ -4,7 +4,6 @@ import lombok.NonNull;
 
 public interface Controller {
     void setSpeed(@NonNull final Speed speed);
-    Speed getSpeed();
     void setUiEngine(@NonNull final UIEngine uiEngine);
 
     // Event

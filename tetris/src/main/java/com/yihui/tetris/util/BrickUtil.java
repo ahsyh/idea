@@ -39,7 +39,7 @@ public class BrickUtil {
         final Shape shape = allShapes.get(index);
         final int rotation = (int)(random % shape.getVariantNumber());
 
-        Brick b = new BrickImpl(shape.content, shape.width, shape.height, shape.variantNumber, index, rotation);
+        Brick b = new BrickImpl(shape.content, shape.width, shape.height, index, rotation);
         for (int i = 0; i < rotation; i++) {
             b.rotate(RotateDirection.ClockWise);
         }

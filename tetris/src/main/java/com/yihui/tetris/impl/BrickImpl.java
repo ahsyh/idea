@@ -13,25 +13,22 @@ public class BrickImpl implements Brick {
     private int width;
     @Getter
     private int height;
-    @Getter
-    private int variantNumber;
 
     @Getter
     private int index;
     @Getter
     private int rotation;
 
-    public BrickImpl(long[] c, int w, int h, int variantNumber, int index, int rotation) {
-        init(c, w, h, variantNumber);
+    public BrickImpl(long[] c, int w, int h, int index, int rotation) {
+        init(c, w, h);
         this.index = index;
         this.rotation = rotation;
     }
 
     @Override
-    public void init(long[] c, int w, int h, int variantNumber) {
+    public void init(long[] c, int w, int h) {
         this.width = w;
         this.height = h;
-        this.variantNumber = variantNumber;
 
         this.content = new long[h];
         System.arraycopy(c, 0, this.content, 0, h);
@@ -67,7 +64,7 @@ public class BrickImpl implements Brick {
 
     @Override
     public Brick getRotate(RotateDirection r) {
-        Brick b = new BrickImpl(content, width, height, variantNumber, index, rotation);
+        Brick b = new BrickImpl(content, width, height, index, rotation);
         b.rotate(r);
         return b;
     }
