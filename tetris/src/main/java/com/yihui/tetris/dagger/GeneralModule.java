@@ -7,20 +7,17 @@ import com.yihui.tetris.controlpanel.Panel;
 import com.yihui.tetris.controlpanel.UIContent;
 import com.yihui.tetris.impl.ControllerImpl;
 import com.yihui.tetris.impl.PanelImpl;
-import com.yihui.tetris.threads.EventListenerManager;
 import dagger.Module;
 import dagger.Provides;
 import lombok.NonNull;
 
 import javax.inject.Singleton;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ */
 @Module
-public class GeneralModule {
+public final class GeneralModule {
     @Provides
     @Singleton
     Panel providePanel() {

@@ -7,9 +7,7 @@ import com.yihui.tetris.controlpanel.RotateDirection;
 import com.yihui.tetris.controlpanel.Speed;
 import com.yihui.tetris.controlpanel.UIContent;
 import com.yihui.tetris.controlpanel.UIEngine;
-import com.yihui.tetris.util.BrickUtil;
 import com.yihui.tetris.util.ContentUtil;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,14 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import static com.yihui.tetris.AppMain.logger;
-import static com.yihui.tetris.Constants.PANEL_WIDTH;
 
+/**
+ *
+ */
 @Slf4j
 @RequiredArgsConstructor
-public class ControllerImpl implements Controller, KeyHandler {
+public final class ControllerImpl implements Controller, KeyHandler {
     @NonNull private final UIContent uiContent;
     private ScheduledExecutorService executorService;
 
@@ -126,7 +125,7 @@ public class ControllerImpl implements Controller, KeyHandler {
             synchronized (uiContent) {
                 int x = uiContent.getBrickPositionX();
                 int y = uiContent.getBrickPositionY();
-                while (tryMove(x, y + 1, () -> {})) {
+                while (tryMove(x, y + 1, () -> { })) {
                     y++;
                 }
                 finishCurrentBrick(x, y);
@@ -199,8 +198,10 @@ public class ControllerImpl implements Controller, KeyHandler {
                 uiContent.getBrickPositionY());
     }
 
-    private void onUserAction(Runnable r, String action) {
-        if (!running) return;
+    private void onUserAction(final Runnable r, final String action) {
+        if (!running) {
+            return;
+        }
 
         logger.warn("controller " + action + " start at " + System.currentTimeMillis());
         r.run();
@@ -215,10 +216,7 @@ public class ControllerImpl implements Controller, KeyHandler {
      * @return true if move succeed
      *         false if move would cause conflict
      */
-    private boolean tryMove(
-            int x,
-            int y,
-            Runnable failedOperation) {
+    private boolean tryMove(final int x, final int y, final Runnable failedOperation) {
         if (ContentUtil.isMergeCauseConflict(uiContent.getPanel().getContent(),
                 uiContent.getCurrent(), x, y)) {
             failedOperation.run();
@@ -231,10 +229,7 @@ public class ControllerImpl implements Controller, KeyHandler {
         }
     }
 
-    private boolean tryRotate(
-            int x,
-            int y,
-            Brick b) {
+    private boolean tryRotate(final int x, final int y, final Brick b) {
         if (ContentUtil.isMergeCauseConflict(
                 uiContent.getPanel().getContent(),
                 b, x, y)) {
@@ -245,7 +240,7 @@ public class ControllerImpl implements Controller, KeyHandler {
         }
     }
 
-    private void finishCurrentBrick(int x, int y) {
+    private void finishCurrentBrick(final int x, final int y) {
         ContentUtil.mergeBrick(uiContent.getPanel().getContent(),
                 uiContent.getCurrent(), x, y);
         uiContent.getPanel().cleanFullLine();

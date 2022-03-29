@@ -13,11 +13,26 @@ import com.yihui.tetris.threads.UIThread;
 
 import javax.inject.Inject;
 
-public class AppMain {
+/**
+ * AppMain for Tetris.
+ */
+public final class AppMain {
+    /**
+     * controller.
+     */
     @Inject protected Controller controller;
+    /**
+     * uiContent.
+     */
     @Inject protected UIContent uiContent;
+    /**
+     * key handler.
+     */
     @Inject protected KeyHandler keyHandler;
 
+    /**
+     * Logger.
+     */
     public static Logger logger = LoggerFactory.getLogger("Tetris");
 
     private AppMain() {
@@ -35,7 +50,11 @@ public class AppMain {
         logger.warn("main controller started, " + System.currentTimeMillis());
     }
 
-    public static void main(String args[]) {
+    /**
+     * main function.
+     * @param args input
+     */
+    public static void main(final String[] args) {
         AppMain main = new AppMain();
         main.run();
     }

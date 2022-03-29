@@ -1,6 +1,18 @@
 package com.yihui.tetris;
 
-public class Constants {
+/**
+ * Constants.
+ */
+public final class Constants {
+    /**
+     * Panel width.
+     */
     public static final int PANEL_WIDTH = 10;
+    /**
+     * Panel height.
+     */
     public static final int PANEL_HEIGHT = 20;
+
+    private Constants() {
+    }
 }
