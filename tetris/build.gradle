@@ -1,6 +1,5 @@
-plugins {
-    id 'java'
-}
+apply plugin: 'java'
+apply plugin: 'checkstyle'
 
 group 'org.yihui'
 version '1.0-SNAPSHOT'
@@ -27,7 +26,6 @@ test {
     useJUnitPlatform()
 }
 
-apply plugin: 'checkstyle'
 checkstyle {
     toolVersion '7.8.1'
 }
