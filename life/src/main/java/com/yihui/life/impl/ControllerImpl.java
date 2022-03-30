@@ -141,14 +141,8 @@ public final class ControllerImpl implements Controller, KeyHandler {
     private static final int NOT_BAD_STATUS = 2;
     private static final int COMFORT_STATUS = 3;
 
-    private void updatePosition(
-            @NonNull final long[] newContent,
-            @NonNull final long[] oldContent,
-            final int x, final int y) {
-
-        int lastStatus = ContentUtil.getBitAtPosition(oldContent, x, y);
+    private int getNewStatus(final int liveCellNumberAround, final int lastStatus) {
         int newStatus;
-        int liveCellNumberAround = ContentUtil.getLiveCellAround(oldContent, x, y);
 
         switch (liveCellNumberAround) {
             case NOT_BAD_STATUS:
@@ -162,6 +156,15 @@ public final class ControllerImpl implements Controller, KeyHandler {
                 break;
         }
 
-        ContentUtil.setBitAtPosition(newContent, x, y, newStatus);
+        return newStatus;
+    }
+
+    private void updatePosition(
+            @NonNull final long[] newContent,
+            @NonNull final long[] oldContent,
+            final int x, final int y) {
+        int lastStatus = ContentUtil.getBitAtPosition(oldContent, x, y);
+        int liveCellNumberAround = ContentUtil.getLiveCellAround(oldContent, x, y);
+        ContentUtil.setBitAtPosition(newContent, x, y, getNewStatus(liveCellNumberAround, lastStatus));
     }
 }
