@@ -8,15 +8,23 @@ import org.junit.jupiter.api.Test;
 
 import static com.yihui.tetris.AppMain.logger;
 
+/**
+ *
+ */
 public class BrickImplTest {
+
+    private static final int BIG_TEST_COUNT = 50;
+    /**
+     *
+     */
     @Test
-    public void test_rotation() {
-        for (int i = 0; i < 50; i++) {
-            test_rotation_once();
+    public void testRotation() {
+        for (int i = 0; i < BIG_TEST_COUNT; i++) {
+            testRotationOnce();
         }
     }
 
-    private void test_rotation_once() {
+    private void testRotationOnce() {
         // precondition
         Brick b = BrickUtil.getRandomBrick();
         logger.warn("origin brick:");

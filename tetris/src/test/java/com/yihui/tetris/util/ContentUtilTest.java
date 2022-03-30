@@ -8,21 +8,30 @@ import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ *
+ */
 public class ContentUtilTest {
 
+    private static final int BIG_TEST_COUNT = 100;
+    /**
+     *
+     */
     @Test
-    public void test_mergeBrick() {
+    public void testMergeBrick() {
         long[] content = new long[PANEL_HEIGHT];
-        for (int i = 0; i < 100; i++) {
-            test_mergeBrick_one_step(content);
+        for (int i = 0; i < BIG_TEST_COUNT; i++) {
+            testMergeBrickOneStep(content);
         }
 
     }
 
-    private void test_mergeBrick_one_step(long[] content) {
+    private static final int ONE_THOUSAND = 1000;
+
+    private void testMergeBrickOneStep(final long[] content) {
         Brick b = BrickUtil.getRandomBrick();
-        int x = ((int)(Math.random() * 1000)) % PANEL_WIDTH;
-        int y = ((int)(Math.random() * 1000)) % PANEL_HEIGHT;
+        int x = ((int) (Math.random() * ONE_THOUSAND)) % PANEL_WIDTH;
+        int y = ((int) (Math.random() * ONE_THOUSAND)) % PANEL_HEIGHT;
         logger.warn("Put brick to:" + x + ", " + y);
         logger.warn("origin brick:");
         ContentUtil.printContent(b.getContent(), b.getWidth(), b.getHeight());
@@ -35,6 +44,9 @@ public class ContentUtilTest {
         ContentUtil.printContent(content, PANEL_WIDTH, PANEL_HEIGHT);
     }
 
+    /**
+     *
+     */
     @Test
     public void test_setBitAtPosition() {
         // precondition
@@ -61,8 +73,12 @@ public class ContentUtilTest {
         assertEquals(0b101, content[0]);
         assertEquals(0b1010000, content[1]);
         assertEquals(0b10100000000, content[2]);
+
     }
 
+    /**
+     *
+     */
     @Test
     public void test_getBitAtPosition_positive() {
         // precondition
@@ -86,6 +102,4 @@ public class ContentUtilTest {
         assertEquals(result04, 0);
         assertEquals(result05, 0);
     }
-
-
 }
