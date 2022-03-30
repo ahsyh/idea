@@ -1,41 +1,38 @@
 package com.yihui.experimental;
 
-import lombok.Data;
+import com.yihui.experimental.optional.Case001;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-
-public class AppMain {
-
-    @Data
-    private static class Order {
-        private Customer customer;
+/**
+ *
+ */
+public final class AppMain {
+    private AppMain() {
     }
 
-    @Data
-    private static class Customer {
-        private String customerId;
+    /**
+     * Logger.
+     */
+    public static Logger logger = LoggerFactory.getLogger("Life");
+
+    /**
+     *
+     * @param run r
+     * @param caseName c
+     */
+    public static void runCase(final Runnable run, final String caseName) {
+        logger.warn("Run case " + caseName + ", start...");
+        run.run();
+        logger.warn("Run case " + caseName + ", end.");
     }
 
-    private static String myMethod(String s) {
-        System.out.println("myMethod is running");
-        return s + " is presented.";
+    /**
+     *
+     * @param args a
+     */
+    public static void main(final String[] args) {
+        Case001.main();
     }
 
-    private static void testOption(final Order order) {
-        String r = Optional.ofNullable(order)
-                .map(Order::getCustomer)
-                .map(Customer::getCustomerId)
-                .map(AppMain::myMethod)
-                .orElse("");
-
-        System.out.println("get result is: " + r);
-    }
-
-    public static void main(String[] args) {
-        final Order o = new Order();
-        final Customer c = new Customer();
-//        o.setCustomer(c);
-//        c.setCustomerId("ABC");
-        testOption(o);
-    }
 }
