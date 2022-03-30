@@ -1,9 +1,6 @@
 package com.yihui.tetris.impl;
 
-import com.yihui.life.util.ContentUtil;
 import org.junit.jupiter.api.Test;
-
-import static com.yihui.life.AppMain.logger;
 
 /**
  *

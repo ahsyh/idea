@@ -1,6 +1,5 @@
 package com.yihui.life.impl;
 
-import com.yihui.life.AppMain;
 import com.yihui.life.controlpanel.Controller;
 import com.yihui.life.controlpanel.KeyHandler;
 import com.yihui.life.controlpanel.Speed;
@@ -140,6 +139,9 @@ public final class ControllerImpl implements Controller, KeyHandler {
         ContentUtil.copyContent(newContent, uiContent.getPanel().getContent());
     }
 
+    private static final int NOT_BAD_STATUS = 2;
+    private static final int COMFORT_STATUS = 3;
+
     private void updatePosition(
             @NonNull final long[] newContent,
             @NonNull final long[] oldContent,
@@ -149,7 +151,7 @@ public final class ControllerImpl implements Controller, KeyHandler {
 
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (i==0 && j==0) {
+                if (i == 0 && j == 0) {
                     continue;
                 }
 
@@ -164,10 +166,10 @@ public final class ControllerImpl implements Controller, KeyHandler {
         int newStatus;
 
         switch (liveCellNumberAround) {
-            case 2:
+            case NOT_BAD_STATUS:
                 newStatus = lastStatus;
                 break;
-            case 3:
+            case COMFORT_STATUS:
                 newStatus = 1;
                 break;
             default:

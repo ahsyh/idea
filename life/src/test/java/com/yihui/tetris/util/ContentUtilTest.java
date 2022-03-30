@@ -3,9 +3,7 @@ package com.yihui.tetris.util;
 import com.yihui.life.util.ContentUtil;
 import org.junit.jupiter.api.Test;
 
-import static com.yihui.life.AppMain.logger;
 import static com.yihui.life.Constants.PANEL_HEIGHT;
-import static com.yihui.life.Constants.PANEL_WIDTH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**

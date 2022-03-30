@@ -1,6 +1,5 @@
 package com.yihui.life.ui;
 
-import com.yihui.life.AppMain;
 import com.yihui.life.controlpanel.Controller;
 import com.yihui.life.controlpanel.KeyHandler;
 import com.yihui.life.controlpanel.UIContent;
