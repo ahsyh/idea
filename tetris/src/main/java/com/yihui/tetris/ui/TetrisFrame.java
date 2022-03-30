@@ -120,8 +120,10 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
                 break;
             case KEY_S:
                 keyHandler.onSlowDown();
+                break;
             case KEY_P:
                 keyHandler.onPause();
+                break;
             default:
                 break;
         }

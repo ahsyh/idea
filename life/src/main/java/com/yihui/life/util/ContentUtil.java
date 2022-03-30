@@ -44,11 +44,7 @@ public final class ContentUtil {
 
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) {
-                    continue;
-                }
-
-                if (ContentUtil.getBitAtPosition(content, x + i, y + j) > 0) {
+                if ((i != 0 || j != 0) && getBitAtPosition(content, x + i, y + j) > 0) {
                     liveCellNumberAround++;
                 }
             }

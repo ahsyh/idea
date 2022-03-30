@@ -16,14 +16,16 @@ public final class PanelImpl implements Panel {
     private int height;
 
     private static long fullLine;
-    static final long BIT_ONE = 0b1;
+    private static final long TEN_TAIL_LINE = 0b1111111111;
+    private static final long BIT_ONE = 0b1;
+
     static {
-        fullLine = 0;
         long bit = BIT_ONE;
         for (int i = 0; i < Constants.PANEL_WIDTH; i++) {
             fullLine |= bit;
             bit <<= 1;
         }
+        logger.warn("PanelImpl init, fillLine: " + Long.toBinaryString(fullLine));
     }
 
     @Override
@@ -38,8 +40,9 @@ public final class PanelImpl implements Panel {
     @Override
     public void reset() {
         for (int i = 0; i < height; i++) {
-            this.content[i] = ((long) (Math.random() * ((long) 1 << BIG_ENOUGH_BITS))) & fullLine;
-            logger.warn("PanelImpl reset panel, line " + i + ", data: " + this.content[i]);
+            this.content[i] = (((long) (Math.random() * fullLine) & fullLine)
+                    | (((long) (Math.random() * TEN_TAIL_LINE))) & TEN_TAIL_LINE);
+            logger.warn("PanelImpl reset panel, line " + i + ", data: " + Long.toBinaryString(this.content[i]));
         }
     }
 

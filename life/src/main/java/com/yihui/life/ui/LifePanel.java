@@ -20,8 +20,6 @@ import static com.yihui.life.AppMain.logger;
 public class LifePanel extends JPanel {
     @NonNull private final UIContent uiContent;
 
-    private boolean firstRun = true;
-
     private static final int BLOCK_SIZE = 15;
 
     /**
@@ -37,7 +35,6 @@ public class LifePanel extends JPanel {
      *
      */
     public void reset() {
-        firstRun = true;
     }
 
     private static final int DRAW_COLOR = 0x081D65;
@@ -51,8 +48,7 @@ public class LifePanel extends JPanel {
         g2D.setColor(new Color(DRAW_COLOR));
 
         logger.warn("LifePanel paint start, " + System.currentTimeMillis()
-                + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());
-
+                + ", running: " + uiContent.isRunning());
 
         paintPanel(g2D);
         logger.warn("LifePanel paint end, " + System.currentTimeMillis());

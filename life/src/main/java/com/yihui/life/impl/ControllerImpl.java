@@ -67,6 +67,7 @@ public final class ControllerImpl implements Controller, KeyHandler {
             uiContent.getPanel().reset();
         }
         running = false;
+        logger.warn("set running to false when stop");
         executorService.shutdown();
     }
 
@@ -95,6 +96,7 @@ public final class ControllerImpl implements Controller, KeyHandler {
     @Override
     public void onPause() {
         running = !running;
+        logger.warn("set running to " + running + " when pause");
         if (running) {
             next();
         }
@@ -103,13 +105,13 @@ public final class ControllerImpl implements Controller, KeyHandler {
     @Override
     public void onSpeedUp() {
         speed = speed.next();
-        logger.warn("new speed: " + speed);
+        logger.warn("new speed: " + speed + ", running: " + running);
     }
 
     @Override
     public void onSlowDown() {
         speed = speed.prev();
-        logger.warn("new speed: " + speed);
+        logger.warn("new speed: " + speed + ", running: " + running);
     }
 
     private void onUserAction(final Runnable r, final String action) {
