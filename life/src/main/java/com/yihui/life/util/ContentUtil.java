@@ -34,6 +34,31 @@ public final class ContentUtil {
 
     /**
      *
+     * @param content c
+     * @param x x
+     * @param y y
+     * @return live cell number
+     */
+    public static int getLiveCellAround(final long[] content, final int x, final int y) {
+        int liveCellNumberAround = 0;
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+
+                if (ContentUtil.getBitAtPosition(content, x + i, y + j) > 0) {
+                    liveCellNumberAround++;
+                }
+            }
+        }
+
+        return liveCellNumberAround;
+    }
+
+    /**
+     *
      * @param content content
      * @param x x
      * @param y y

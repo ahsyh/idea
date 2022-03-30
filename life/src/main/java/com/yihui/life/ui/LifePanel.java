@@ -65,8 +65,6 @@ public class LifePanel extends JPanel {
             for (int x = 0; x < Constants.PANEL_WIDTH; x++) {
                 drawRect(x, y, g2D, ContentUtil.getBitAtPosition(content, x, y) != 0);
             }
-            logger.warn("Reset panel, line " + y + ", data: " + content[y]);
-
         }
     }
 

@@ -135,7 +135,6 @@ public final class ControllerImpl implements Controller, KeyHandler {
                 updatePosition(newContent, uiContent.getPanel().getContent(), j, i);
             }
         }
-
         ContentUtil.copyContent(newContent, uiContent.getPanel().getContent());
     }
 
@@ -146,24 +145,10 @@ public final class ControllerImpl implements Controller, KeyHandler {
             @NonNull final long[] newContent,
             @NonNull final long[] oldContent,
             final int x, final int y) {
-        //obtain all cells around (x,y)
-        int liveCellNumberAround = 0;
-
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) {
-                    continue;
-                }
-
-                int result = ContentUtil.getBitAtPosition(oldContent, x + i, y + j);
-                if (result > 0) {
-                    liveCellNumberAround++;
-                }
-            }
-        }
 
         int lastStatus = ContentUtil.getBitAtPosition(oldContent, x, y);
         int newStatus;
+        int liveCellNumberAround = ContentUtil.getLiveCellAround(oldContent, x, y);
 
         switch (liveCellNumberAround) {
             case NOT_BAD_STATUS:
@@ -179,6 +164,4 @@ public final class ControllerImpl implements Controller, KeyHandler {
 
         ContentUtil.setBitAtPosition(newContent, x, y, newStatus);
     }
-
-
 }
