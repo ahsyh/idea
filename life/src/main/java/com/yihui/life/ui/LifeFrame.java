@@ -32,7 +32,7 @@ public class LifeFrame extends JFrame implements UIEngine, KeyListener {
             @NonNull final Controller c,
             @NonNull final KeyHandler k,
             @NonNull final UIContent u) {
-        super("Tetris");
+        super("Life");
         this.panel = new LifePanel(u);
         this.controller = c;
         this.keyHandler = k;

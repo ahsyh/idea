@@ -50,12 +50,12 @@ public class LifePanel extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         g2D.setColor(new Color(DRAW_COLOR));
 
-        logger.warn("TetrisPanel paint start, " + System.currentTimeMillis()
+        logger.warn("LifePanel paint start, " + System.currentTimeMillis()
                 + ", firstRun: " + firstRun + ", running: " + uiContent.isRunning());
 
 
         paintPanel(g2D);
-        logger.warn("TetrisPanel paint end, " + System.currentTimeMillis());
+        logger.warn("LifePanel paint end, " + System.currentTimeMillis());
     }
 
     private void paintPanel(final Graphics2D g2D) {

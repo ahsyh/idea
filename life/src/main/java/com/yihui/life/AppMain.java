@@ -14,7 +14,7 @@ import com.yihui.life.threads.UIThread;
 import javax.inject.Inject;
 
 /**
- * AppMain for Tetris.
+ * AppMain for Life.
  */
 public final class AppMain {
     /**
@@ -33,7 +33,7 @@ public final class AppMain {
     /**
      * Logger.
      */
-    public static Logger logger = LoggerFactory.getLogger("Tetris");
+    public static Logger logger = LoggerFactory.getLogger("Life");
 
     private AppMain() {
         GeneralComponent component = DaggerGeneralComponent.builder().build();

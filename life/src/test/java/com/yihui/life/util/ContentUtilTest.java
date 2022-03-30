@@ -1,6 +1,5 @@
-package com.yihui.tetris.util;
+package com.yihui.life.util;
 
-import com.yihui.life.util.ContentUtil;
 import org.junit.jupiter.api.Test;
 
 import static com.yihui.life.Constants.PANEL_HEIGHT;

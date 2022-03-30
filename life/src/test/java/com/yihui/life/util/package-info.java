@@ -13,4 +13,4 @@
  * @since 1.0
  * @see java.awt
  */
-package com.yihui.tetris.impl;
+package com.yihui.life.util;
