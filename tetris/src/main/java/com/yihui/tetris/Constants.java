@@ -11,7 +11,7 @@ public final class Constants {
     /**
      * Panel height.
      */
-    public static final int PANEL_HEIGHT = 20;
+    public static final int PANEL_HEIGHT = 22;
 
     private Constants() {
     }

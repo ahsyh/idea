@@ -67,10 +67,12 @@ public class TetrisPanel extends JPanel {
         logger.warn("TetrisPanel paint end, " + System.currentTimeMillis());
     }
 
+    private static final int HIDE_AREA_HEIGHT = 2;
+
     private void paintPanel(final Graphics2D g2D) {
         for (int x = 0; x < PANEL_WIDTH; x++) {
-            for (int y = 0; y < PANEL_HEIGHT; y++) {
-                drawRect(x, y, g2D, ContentUtil.getBitAtPosition(currContent, x, y) != 0);
+            for (int y = HIDE_AREA_HEIGHT; y < PANEL_HEIGHT; y++) {
+                drawRect(x, y - HIDE_AREA_HEIGHT, g2D, ContentUtil.getBitAtPosition(currContent, x, y) != 0);
             }
         }
     }
