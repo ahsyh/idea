@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
 import static com.yihui.tetris.AppMain.logger;
 import static com.yihui.tetris.Constants.PANEL_HEIGHT;
 import static com.yihui.tetris.Constants.PANEL_WIDTH;
+import static com.yihui.tetris.ui.TetrisFrame.BLOCK_SIZE;
 
 /**
  *
@@ -24,8 +25,6 @@ public class TetrisPanel extends JPanel {
 
     private boolean firstRun = true;
 
-    private static final int BLOCK_SIZE = 40;
-
     /**
      *
      * @param u ui
@@ -33,7 +32,9 @@ public class TetrisPanel extends JPanel {
     public TetrisPanel(@NonNull final UIContent u) {
         this.uiContent = u;
         this.currContent = new long[PANEL_HEIGHT];
-        setPreferredSize(new Dimension(BLOCK_SIZE * PANEL_WIDTH, BLOCK_SIZE * PANEL_HEIGHT));
+        setPreferredSize(new Dimension(
+                BLOCK_SIZE * PANEL_WIDTH,
+                BLOCK_SIZE * (PANEL_HEIGHT - HIDE_AREA_HEIGHT)));
     }
 
     /**

@@ -34,13 +34,15 @@ public final class PanelImpl implements Panel {
     }
 
     @Override
-    public void cleanFullLine() {
+    public int cleanFullLine() {
         int checkLine = PANEL_HEIGHT - 1;
         int writeLine = PANEL_HEIGHT - 1;
+        int cleanLines = 0;
 
         for (; checkLine >= 0; checkLine--) {
             if ((content[checkLine] & fullLine) == fullLine) {
                 content[checkLine] = 0;
+                cleanLines++;
             } else {
                 if (writeLine != checkLine) {
                     content[writeLine] = content[checkLine];
@@ -49,6 +51,7 @@ public final class PanelImpl implements Panel {
                 writeLine--;
             }
         }
+        return cleanLines;
     }
 
     @Override

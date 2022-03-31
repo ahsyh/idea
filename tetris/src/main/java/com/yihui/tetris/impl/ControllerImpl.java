@@ -243,7 +243,7 @@ public final class ControllerImpl implements Controller, KeyHandler {
     private void finishCurrentBrick(final int x, final int y) {
         ContentUtil.mergeBrick(uiContent.getPanel().getContent(),
                 uiContent.getCurrent(), x, y);
-        uiContent.getPanel().cleanFullLine();
+        uiContent.updateScore(uiContent.getPanel().cleanFullLine());
         uiContent.nextStep();
     }
 

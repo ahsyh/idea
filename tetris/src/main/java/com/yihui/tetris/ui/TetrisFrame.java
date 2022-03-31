@@ -7,6 +7,9 @@ import com.yihui.tetris.controlpanel.UIEngine;
 import lombok.NonNull;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -16,11 +19,19 @@ import static com.yihui.tetris.AppMain.logger;
  *
  */
 public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
+    /**
+     *
+     */
+    public static final int BLOCK_SIZE = 40;
+
     @NonNull private final Controller controller;
     @NonNull private final KeyHandler keyHandler;
     @NonNull private final UIContent uiContent;
 
-    private final TetrisPanel panel;
+    private final TetrisPanel gamePanel;
+    private final NextBrickPanel brickPanel;
+    private final JPanel mainPanel;
+    private final JLabel scoreLabel;
 
     /**
      *
@@ -33,7 +44,10 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
             @NonNull final KeyHandler k,
             @NonNull final UIContent u) {
         super("Tetris");
-        this.panel = new TetrisPanel(u);
+        this.mainPanel = new JPanel();
+        this.gamePanel = new TetrisPanel(u);
+        this.brickPanel = new NextBrickPanel(u);
+        this.scoreLabel = new JLabel();
         this.controller = c;
         this.keyHandler = k;
         this.uiContent = u;
@@ -46,7 +60,11 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
         controller.setUiEngine(this);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(panel);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+        mainPanel.add(gamePanel);
+        mainPanel.add(brickPanel);
+
+        add(mainPanel);
         pack();
 
         setLayout(null);
@@ -60,7 +78,9 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
      */
     @Override
     public void display() {
-        panel.repaint();
+        gamePanel.repaint();
+        brickPanel.repaint();
+        scoreLabel.setText("Score: ");
     }
 
     /**
@@ -68,8 +88,9 @@ public class TetrisFrame extends JFrame implements UIEngine, KeyListener {
      */
     @Override
     public void reset() {
-        panel.reset();
-        panel.repaint();
+        gamePanel.reset();
+        gamePanel.repaint();
+        brickPanel.repaint();
     }
 
     /**

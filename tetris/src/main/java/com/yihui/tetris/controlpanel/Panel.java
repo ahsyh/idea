@@ -31,8 +31,9 @@ public interface Panel {
 
     /**
      *
+     * @return cleared line number
      */
-    void cleanFullLine();
+    int cleanFullLine();
 
     /**
      *
