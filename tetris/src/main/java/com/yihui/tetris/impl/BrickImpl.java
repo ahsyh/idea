@@ -96,4 +96,19 @@ public class BrickImpl implements Brick {
         b.rotate(r);
         return b;
     }
+
+    /**
+     *
+     * @param x x
+     * @param y y
+     * @return 0
+     */
+    @Override
+    public int getBitAtPosition(final int x, final int y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return -1;
+        }
+
+        return ContentUtil.getBitAtPosition(content, x, y);
+    }
 }

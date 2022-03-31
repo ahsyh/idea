@@ -2,7 +2,6 @@ package com.yihui.tetris.ui;
 
 import com.yihui.tetris.controlpanel.Brick;
 import com.yihui.tetris.controlpanel.UIContent;
-import com.yihui.tetris.util.ContentUtil;
 import lombok.NonNull;
 
 import javax.swing.JPanel;
@@ -50,13 +49,15 @@ public class NextBrickPanel  extends JPanel {
         logger.warn("BrickPanel paint end, " + System.currentTimeMillis());
     }
 
+    private static final int MAX_BRICK_WIDTH = 4;
     private static final int MAX_BRICK_HEIGHT = 4;
 
     private void paintPanel(final Graphics2D g2D) {
         Brick b = uiContent.getNext();
-        for (int x = 0; x < b.getWidth(); x++) {
-            for (int y = 0; y < b.getHeight(); y++) {
-                drawRect(x, y, g2D, ContentUtil.getBitAtPosition(b.getContent(), x, y) != 0);
+        for (int x = 0; x < MAX_BRICK_WIDTH; x++) {
+            for (int y = 0; y < MAX_BRICK_HEIGHT; y++) {
+                drawRect(x, y, g2D, b != null
+                        && b.getBitAtPosition(x, y) == 1);
             }
         }
         g2D.drawString("Score : " + uiContent.getScore(), 0, (MAX_BRICK_HEIGHT + 1) * BLOCK_SIZE);

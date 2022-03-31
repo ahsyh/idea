@@ -51,4 +51,14 @@ public interface Brick {
      * @return new brick
      */
     Brick getRotate(RotateDirection r);
+
+    /**
+     *
+     * @param x x
+     * @param y y
+     * @return -1 out of range
+     *         0 clear
+     *         1 filled
+     */
+    int getBitAtPosition(int x, int y);
 }

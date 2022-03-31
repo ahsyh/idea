@@ -33,7 +33,7 @@ public class TetrisPanel extends JPanel {
         this.uiContent = u;
         this.currContent = new long[PANEL_HEIGHT];
         setPreferredSize(new Dimension(
-                BLOCK_SIZE * PANEL_WIDTH,
+                BLOCK_SIZE * (PANEL_WIDTH + 1),
                 BLOCK_SIZE * (PANEL_HEIGHT - HIDE_AREA_HEIGHT)));
     }
 
