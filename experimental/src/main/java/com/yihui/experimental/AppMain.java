@@ -1,6 +1,6 @@
 package com.yihui.experimental;
 
-import com.yihui.experimental.optional.Case001;
+import com.yihui.experimental.rxjava.Case003;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class AppMain {
-    private AppMain() {
-    }
-
     /**
      * Logger.
      */
-    public static Logger logger = LoggerFactory.getLogger("Life");
+    public static Logger logger = LoggerFactory.getLogger("Ex:");
+
+    private AppMain() {
+    }
 
     /**
      *
@@ -32,7 +32,9 @@ public final class AppMain {
      * @param args a
      */
     public static void main(final String[] args) {
-        Case001.main();
+        //Case001.getInstance().test(1,2,3);
+        Case003 c = new Case003();
+        c.test();
     }
 
 }
