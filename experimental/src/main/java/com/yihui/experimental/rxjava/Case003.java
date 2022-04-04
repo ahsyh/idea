@@ -1,5 +1,6 @@
 package com.yihui.experimental.rxjava;
 
+import com.yihui.experimental.util.CommonUtil;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -10,7 +11,6 @@ import static com.yihui.experimental.AppMain.logger;
 
 public class Case003 {
     private Case003() {
-
     }
 
     @RequiredArgsConstructor
@@ -38,20 +38,24 @@ public class Case003 {
         }
     }
 
-    public static void test() {
+    private static void testStep() {
         Observable<String> sender = Observable.just("long", "longer", "longest");
-
-
-
         A a = new A("a");
 
         // 1. 进行订阅，subscribe(Observer)
-        sender
+        Disposable d = sender
                 .map(i -> i + " er")
                 .filter(i -> i.length() > 7)
                 .observeOn(Schedulers.io())
-                //.subscribe(s -> logger.warn("accept: " + s));
-                .subscribe(a);
+                .subscribe(s -> logger.warn("accept: " + s));
+                //.subscribe(a);
 
+        CommonUtil.sleep(2000);
+    }
+
+    public static void test() {
+        CommonUtil.runCase(() -> {
+            testStep();
+        }, "RX case3");
     }
 }

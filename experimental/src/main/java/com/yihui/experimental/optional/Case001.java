@@ -1,11 +1,11 @@
 package com.yihui.experimental.optional;
 
+import com.yihui.experimental.util.CommonUtil;
 import lombok.Data;
 
 import java.util.Optional;
 
 import static com.yihui.experimental.AppMain.logger;
-import static com.yihui.experimental.AppMain.runCase;
 
 /**
  *
@@ -40,7 +40,7 @@ public final class Case001 {
     }
 
     private static void case01() {
-        runCase(() -> {
+        CommonUtil.runCase(() -> {
             final Order o = new Order();
             final Customer c = new Customer();
             testOption(o);
@@ -48,7 +48,7 @@ public final class Case001 {
     }
 
     private static void case02() {
-        runCase(() -> {
+        CommonUtil.runCase(() -> {
             final Order o = new Order();
             final Customer c = new Customer();
             o.setCustomer(c);

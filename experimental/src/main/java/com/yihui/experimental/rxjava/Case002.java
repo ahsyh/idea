@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import static com.yihui.experimental.AppMain.logger;
 
 public class Case002 {
+    private Case002() {
+    }
+
     @RequiredArgsConstructor
     private static class A implements Observer<String> {
         private final String name;
@@ -91,8 +94,22 @@ public class Case002 {
         };
 
         // 1. 进行订阅，subscribe(Observer)
-        sender.observeOn(Schedulers.io()).subscribe(obs1);
-        sender.observeOn(Schedulers.io()).subscribe(obs2);
+        sender
+                .map(i -> "test1 " + i)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.io())
+                .subscribe(obs1);
+        sender
+                .map(i -> "test2 " + i)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .subscribe(obs2);
+
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            logger.warn("get interruption " + e);
+        }
 
         logger.warn("---------------------------------------------");
 //        // 2. 进行订阅，subscribe(Consumer onNext)
