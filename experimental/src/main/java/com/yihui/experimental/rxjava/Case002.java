@@ -38,7 +38,7 @@ public class Case002 {
         }
     }
 
-    public void test() {
+    public static void test() {
         // 创建Observable(被观察者)
         Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
 
@@ -91,8 +91,22 @@ public class Case002 {
         };
 
         // 1. 进行订阅，subscribe(Observer)
-        sender.observeOn(Schedulers.io()).subscribe(obs1);
-        sender.observeOn(Schedulers.io()).subscribe(obs2);
+        sender
+                .map(i -> "test1 " + i)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.io())
+                .subscribe(obs1);
+        sender
+                .map(i -> "test2 " + i)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .subscribe(obs2);
+
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            logger.warn("get interruption " + e);
+        }
 
         logger.warn("---------------------------------------------");
 //        // 2. 进行订阅，subscribe(Consumer onNext)
