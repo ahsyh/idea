@@ -38,7 +38,7 @@ public class Case002 {
         }
     }
 
-    public void test() {
+    public static void test() {
         // 创建Observable(被观察者)
         Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
 

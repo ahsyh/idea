@@ -9,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 import static com.yihui.experimental.AppMain.logger;
 
 public class Case003 {
+    private Case003() {
+
+    }
+
     @RequiredArgsConstructor
     private static class A implements Observer<String> {
         private final String name;
