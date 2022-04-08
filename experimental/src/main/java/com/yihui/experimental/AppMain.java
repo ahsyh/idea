@@ -1,8 +1,9 @@
 package com.yihui.experimental;
 
-import com.yihui.experimental.rxjava.Case003;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.yihui.experimental.threads.Case001.test;
 
 /**
  *
@@ -16,15 +17,12 @@ public final class AppMain {
     private AppMain() {
     }
 
-
     /**
      *
      * @param args a
      */
     public static void main(final String[] args) {
-        //Case001.getInstance().test(1,2,3);
-        //Case002.test();
-        Case003.test();
+        test();
     }
 
 }

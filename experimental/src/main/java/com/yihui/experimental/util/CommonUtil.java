@@ -9,7 +9,7 @@ public class CommonUtil {
 
     public static void sleep(long ms) {
         try{
-            Thread.sleep(2000);
+            Thread.sleep(ms);
         } catch (InterruptedException e) {
             logger.warn("get interruption " + e);
         }

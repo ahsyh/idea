@@ -51,11 +51,12 @@ public class Case003 {
                 //.subscribe(a);
 
         CommonUtil.sleep(2000);
+        if (!d.isDisposed()) {
+            d.dispose();
+        }
     }
 
     public static void test() {
-        CommonUtil.runCase(() -> {
-            testStep();
-        }, "RX case3");
+        CommonUtil.runCase(Case003::testStep, "RX case3");
     }
 }
