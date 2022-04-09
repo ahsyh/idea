@@ -1,7 +1,6 @@
-package com.yihui.experimental.leetcode;
+package com.yihui.experimental.leetcode00;
 
 import com.yihui.experimental.util.Log;
-import lombok.val;
 
 public class Case002 {
     private static final String TAG = "002";

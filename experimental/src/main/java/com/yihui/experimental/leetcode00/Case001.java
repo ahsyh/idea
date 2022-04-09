@@ -1,4 +1,4 @@
-package com.yihui.experimental.leetcode;
+package com.yihui.experimental.leetcode00;
 
 import java.util.HashMap;
 import java.util.Map;
