@@ -1,47 +1,13 @@
-package com.yihui.experimental.leetcode00;
+package com.yihui.experimental.leetcode.set00;
 
-import com.yihui.experimental.util.Log;
+import com.yihui.experimental.util.LeetUtil.ListNode;
+
+import static com.yihui.experimental.util.LeetUtil.arrayToList;
+import static com.yihui.experimental.util.LeetUtil.printList;
 
 public class Case002 {
     private static final String TAG = "002";
-
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-    }
-
-    private static void printList(ListNode l) {
-        StringBuilder sb = new StringBuilder();
-        while (l != null) {
-            sb.append(l.val + " ");
-            l = l.next;
-        }
-        Log.e(TAG, sb.toString());
-    }
-
-    private static ListNode arrayToList(int[] a) {
-        if (a.length <= 0) return null;
-
-        ListNode t = new ListNode(0);
-        ListNode r = t;
-        ListNode p = null;
-
-        for (int i = 0; i < a.length; i++) {
-            t.val = a[i];
-            t.next = new ListNode(0);
-            p = t;
-            t = t.next;
-        }
-
-        if (t.val == 0 && p != t) {
-            p.next = null;
-        }
-
-        return r;
+    private Case002() {
     }
 
     static class Solution {
