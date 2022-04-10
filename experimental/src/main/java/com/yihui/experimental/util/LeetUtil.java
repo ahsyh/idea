@@ -15,6 +15,14 @@ public final class LeetUtil {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
+    public static void printList(int[] l) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < l.length; i++) {
+            sb.append(l[i] + " ");
+        }
+        Log.e("", sb.toString());
+    }
+
     public static void printList(ListNode l) {
         StringBuilder sb = new StringBuilder();
         while (l != null) {
