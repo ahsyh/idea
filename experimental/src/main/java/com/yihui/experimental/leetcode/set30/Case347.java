@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class Case347 {
-    private static final String TAG = "032";
+    private static final String TAG = "347";
     private Case347() {
     }
     private static Solution s = new Solution();
