@@ -6,6 +6,11 @@ public final class LeetUtil {
             Log.e("assert", "assertTrue failed! label:" + label);
         }
     }
+    public static void assertSameString(String a, String b, String label) {
+        if (!a.equals(b)) {
+            Log.e("assert", "assertTrue failed! label:" + label);
+        }
+    }
 
     public static class ListNode {
         public int val;

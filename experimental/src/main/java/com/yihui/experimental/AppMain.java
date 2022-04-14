@@ -3,7 +3,7 @@ package com.yihui.experimental;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.yihui.experimental.leetcode.set10.Case166.test;
+import static com.yihui.experimental.leetcode.set10.Case042.test;
 
 /**
  *
