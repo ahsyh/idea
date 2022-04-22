@@ -45,7 +45,7 @@ public class Question001 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.e("get all events");
+        Log.i("get all events");
     }
 
     private Event readOneEvent(FileIo.StringReader sr) {
@@ -76,9 +76,9 @@ public class Question001 {
     public void testAllEvents() {
         for (Event e: allEvents) {
             if (testOneEvent(e)) {
-                System.out.println("Yes");
+                Log.e("Yes");
             } else {
-                System.out.println("No");
+                Log.e("No");
             }
         }
     }
@@ -164,6 +164,10 @@ public class Question001 {
                     return false;
                 }
 
+                if (status.isConfirmed && status.confirm != curr) {
+                    return false;
+                }
+
                 if (status.exclude.contains(curr)) {
                     return false;
                 }
@@ -191,7 +195,6 @@ public class Question001 {
     }
 
     private boolean testGuess(
-            ArrayList<int[]> allGuess,
             int guessIndex,
             ArrayList<PositionStatus> positions,
             Event e) {
@@ -206,13 +209,25 @@ public class Question001 {
         for (boolean[] possible : possibles) {
             ArrayList<PositionStatus> newStatus = copyPositionStatus(positions);
             boolean r = false;
-            if (isValid(possible, newStatus, allGuess.get(guessIndex), e.numberInOneGuess, e.numberRange)) {
-                merge(possible, newStatus, allGuess.get(guessIndex), e.numberInOneGuess);
-                r = testGuess(allGuess, guessIndex + 1, newStatus, e);
+            if (isValid(possible, newStatus, guess, e.numberInOneGuess, e.numberRange)) {
+                merge(possible, newStatus, guess, e.numberInOneGuess);
+                r = testGuess( guessIndex + 1, newStatus, e);
             }
             if (r) {
+                StringBuilder sb = new StringBuilder();
+
+                for (int k = 0; k < (guess.length - 1); k++) {
+                    sb.append(guess[k]);
+                    if (possible[k]) {
+                        sb.append(" * ");
+                    } else {
+                        sb.append(" x ");
+                    }
+                }
+                Log.i("[]: " + sb);
                 return true;
             }
+
         }
 
         return false;
@@ -229,11 +244,13 @@ public class Question001 {
             positions.add(position);
         }
 
-        if (testGuess(e.allGuess, 0, positions, e)) {
-            return true;
-        }
+        boolean r = false;
 
-        return false;
+        Log.i("Start test one event");
+        r = testGuess(0, positions, e);
+        Log.i("Start test one complete");
+
+        return r;
     }
 
 
