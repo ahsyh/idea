@@ -139,40 +139,28 @@ public class Question001 {
     }
 
     private boolean isValid(boolean[] possible, ArrayList<PositionStatus> allStatus, int[] guess, int length, int numberRange) {
-        Set<Integer> samePossible = new HashSet<>();
-        Map<Integer, Integer> confirmed = new HashMap<>();
-
         for (int i = 0; i < length; i++) {
+            int curr = guess[i];
             PositionStatus status = allStatus.get(i);
 
-            if (status.isConfirmed) {
-                confirmed.put(status.confirm, i);
-            }
-        }
-
-        for (int i = 0; i < length; i++) {
             if (possible[i]) {
-                int curr = guess[i];
-                PositionStatus status = allStatus.get(i);
-
-                if (samePossible.contains(curr)) {
-                    return false;
-                }
-                samePossible.add(curr);
-
-                if (confirmed.containsKey(curr) && confirmed.get(curr) != i) {
-                    return false;
-                }
-
+                // we already assume current position should be another int
                 if (status.isConfirmed && status.confirm != curr) {
                     return false;
                 }
 
+                // we already assume current position cannot be this int
                 if (status.exclude.contains(curr)) {
                     return false;
                 }
 
+                // all possible int has been excluded, this cannot happen
                 if (!status.exclude.contains(curr) && status.exclude.size() == (numberRange - 1)) {
+                    return false;
+                }
+            } else {
+                // we already assume the current position is this int, now we try to exclude it
+                if (status.isConfirmed && status.confirm == curr) {
                     return false;
                 }
             }
@@ -217,13 +205,14 @@ public class Question001 {
                 StringBuilder sb = new StringBuilder();
 
                 for (int k = 0; k < (guess.length - 1); k++) {
-                    sb.append(guess[k]);
+                    sb.append(String.format("%2d", guess[k]));
                     if (possible[k]) {
                         sb.append(" * ");
                     } else {
                         sb.append(" x ");
                     }
                 }
+                sb.append(" - " + guess[guess.length - 1]);
                 Log.i("[]: " + sb);
                 return true;
             }
