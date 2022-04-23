@@ -12,7 +12,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.yihui.f.util.FileIo.FILE_SEPARATOR;
+
 public class Question001 {
+
+    public static void test() {
+        Question001 q = new Question001();
+        String fileName = ""
+                + "src" + FILE_SEPARATOR
+                + "main" + FILE_SEPARATOR
+                + "resources" + FILE_SEPARATOR
+                + "Q001-data.txt";
+        q.setDataFile(fileName);
+        q.readAllEvents();
+        q.testAllEvents();
+    }
+
     @Data
     private static class Event {
         private int numberRange;
@@ -22,9 +37,18 @@ public class Question001 {
         private ArrayList<int[]> allGuess;
     }
 
+    @Data
+    private static class PositionStatus {
+        int numberRange;
+        boolean isConfirmed;
+        int confirm;
+        Set<Integer> exclude;
+    }
+
     @Setter
     private String dataFile;
-    private List<Event> allEvents = new ArrayList<>();
+
+    private final List<Event> allEvents = new ArrayList<>();
 
     public void readAllEvents () {
         FileIo.StringReader sr = new FileIo.StringReader();
@@ -81,14 +105,6 @@ public class Question001 {
         }
     }
 
-    @Data
-    private static class PositionStatus {
-        int numberRange;
-        boolean isConfirmed;
-        int confirm;
-        Set<Integer> exclude;
-    }
-
     private void generateAllPossibles(
             List<boolean[]> possibles,
             boolean[] onePossible,
@@ -103,13 +119,14 @@ public class Question001 {
             return;
         }
 
-        if ((correctNumber - usedTrue) < (numberInOneGuess - curr)) {
-            onePossible[curr] = false;
-            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue, curr+1);
-        }
         if (correctNumber > usedTrue) {
             onePossible[curr] = true;
             generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue+1, curr+1);
+        }
+
+        if ((correctNumber - usedTrue) < (numberInOneGuess - curr)) {
+            onePossible[curr] = false;
+            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue, curr+1);
         }
     }
 
@@ -167,8 +184,8 @@ public class Question001 {
         return true;
     }
 
-    private void merge(boolean[] possible, ArrayList<PositionStatus> allStatus, int[] guess, int length) {
-        for (int i = 0; i < length; i++) {
+    private void merge(ArrayList<PositionStatus> allStatus, boolean[] possible, int[] guess) {
+        for (int i = 0; i < guess.length - 1; i++) {
             PositionStatus status = allStatus.get(i);
             int curr = guess[i];
             if (possible[i]) {
@@ -196,7 +213,7 @@ public class Question001 {
             ArrayList<PositionStatus> newStatus = copyPositionStatus(positions);
             boolean r = false;
             if (isValid(possible, newStatus, guess, e.numberInOneGuess, e.numberRange)) {
-                merge(possible, newStatus, guess, e.numberInOneGuess);
+                merge(newStatus, possible, guess);
                 r = testGuess( guessIndex + 1, newStatus, e);
             }
             if (r) {
@@ -210,7 +227,7 @@ public class Question001 {
                         sb.append(" x ");
                     }
                 }
-                sb.append(" - " + guess[guess.length - 1]);
+                sb.append(" - ").append(guess[guess.length - 1]);
                 Log.i("[]: " + sb);
                 return true;
             }
@@ -231,14 +248,10 @@ public class Question001 {
             positions.add(position);
         }
 
-        boolean r = false;
-
         Log.i("Start test one event");
-        r = testGuess(0, positions, e);
-        Log.i("Start test one complete");
+        boolean r = testGuess(0, positions, e);
+        Log.i("Start test one complete, user guessed " + e.guessCount + " times.");
 
         return r;
     }
-
-
 }

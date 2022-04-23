@@ -69,7 +69,7 @@ public class FileIo {
                     + "src" + FILE_SEPARATOR
                     + "main" + FILE_SEPARATOR
                     + "resources" + FILE_SEPARATOR
-                    + "data.txt";
+                    + "Q001-data.txt";
             sr.init(fileName);
             String str;
             while ((str = sr.readLine())!= null) {
