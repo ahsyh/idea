@@ -14,8 +14,14 @@ import java.util.Set;
 
 import static com.yihui.f.util.FileIo.FILE_SEPARATOR;
 
+/**
+ * Question 1.
+ */
 public class Question001 {
 
+    /**
+     * Test one case.
+     */
     public static void test() {
         Question001 q = new Question001();
         String fileName = ""
@@ -28,6 +34,9 @@ public class Question001 {
         q.testAllEvents();
     }
 
+    /**
+     * Contain a list of guess.
+     */
     @Data
     private static class Event {
         private int numberRange;
@@ -37,6 +46,9 @@ public class Question001 {
         private ArrayList<int[]> allGuess;
     }
 
+    /**
+     * Data for one position status.
+     */
     @Data
     private static class PositionStatus {
         int numberRange;
@@ -50,7 +62,10 @@ public class Question001 {
 
     private final List<Event> allEvents = new ArrayList<>();
 
-    public void readAllEvents () {
+    /**
+     * Read data from file.
+     */
+    public void readAllEvents() {
         FileIo.StringReader sr = new FileIo.StringReader();
         allEvents.clear();
         try {
@@ -70,7 +85,7 @@ public class Question001 {
         Log.i("get all events");
     }
 
-    private Event readOneEvent(FileIo.StringReader sr) {
+    private Event readOneEvent(final FileIo.StringReader sr) {
         Event e = new Event();
         try {
             String[] head = sr.readLine().split(" ");
@@ -95,8 +110,11 @@ public class Question001 {
         return e;
     }
 
+    /**
+     * Test all events.
+     */
     public void testAllEvents() {
-        for (Event e: allEvents) {
+        for (final Event e: allEvents) {
             if (testOneEvent(e)) {
                 Log.e("Yes");
             } else {
@@ -106,12 +124,12 @@ public class Question001 {
     }
 
     private void generateAllPossibles(
-            List<boolean[]> possibles,
-            boolean[] onePossible,
-            int numberInOneGuess,
-            int correctNumber,
-            int usedTrue,
-            int curr) {
+            final List<boolean[]> possibles,
+            final boolean[] onePossible,
+            final int numberInOneGuess,
+            final int correctNumber,
+            final int usedTrue,
+            final int curr) {
         if (curr >= numberInOneGuess) {
             boolean[] oneResult = new boolean[numberInOneGuess];
             System.arraycopy(onePossible, 0, oneResult, 0, numberInOneGuess);
@@ -121,25 +139,25 @@ public class Question001 {
 
         if (correctNumber > usedTrue) {
             onePossible[curr] = true;
-            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue+1, curr+1);
+            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue + 1, curr + 1);
         }
 
         if ((correctNumber - usedTrue) < (numberInOneGuess - curr)) {
             onePossible[curr] = false;
-            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue, curr+1);
+            generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, usedTrue, curr + 1);
         }
     }
 
     private void generateAllPossibles(
-            List<boolean[]> possibles,
-            int numberInOneGuess,
-            int correctNumber) {
+            final List<boolean[]> possibles,
+            final int numberInOneGuess,
+            final int correctNumber) {
         boolean[] onePossible = new boolean[numberInOneGuess];
         generateAllPossibles(possibles, onePossible, numberInOneGuess, correctNumber, 0, 0);
     }
 
-    private ArrayList<PositionStatus> copyPositionStatus(ArrayList<PositionStatus> origin) {
-        ArrayList<PositionStatus> result = new ArrayList<PositionStatus>();
+    private ArrayList<PositionStatus> copyPositionStatus(final ArrayList<PositionStatus> origin) {
+        final ArrayList<PositionStatus> result = new ArrayList<PositionStatus>();
 
         for (PositionStatus old : origin) {
             PositionStatus one = new PositionStatus();
@@ -153,8 +171,11 @@ public class Question001 {
         return result;
     }
 
-    private boolean isValid(boolean[] possible, ArrayList<PositionStatus> allStatus, int[] guess, int length, int numberRange) {
-        for (int i = 0; i < length; i++) {
+    private boolean isValid(final boolean[] possible,
+                            final ArrayList<PositionStatus> allStatus,
+                            final int[] guess,
+                            final int numberRange) {
+        for (int i = 0; i < guess.length - 1; i++) {
             int curr = guess[i];
             PositionStatus status = allStatus.get(i);
 
@@ -184,7 +205,9 @@ public class Question001 {
         return true;
     }
 
-    private void merge(ArrayList<PositionStatus> allStatus, boolean[] possible, int[] guess) {
+    private void merge(final ArrayList<PositionStatus> allStatus,
+                       final boolean[] possible,
+                       final int[] guess) {
         for (int i = 0; i < guess.length - 1; i++) {
             PositionStatus status = allStatus.get(i);
             int curr = guess[i];
@@ -198,23 +221,23 @@ public class Question001 {
     }
 
     private boolean testGuess(
-            int guessIndex,
-            ArrayList<PositionStatus> positions,
-            Event e) {
+            final int guessIndex,
+            final ArrayList<PositionStatus> positions,
+            final Event e) {
         if (guessIndex >= e.guessCount) {
             return true;
         }
 
-        ArrayList<boolean[]> possibles = new ArrayList<>();
-        int[] guess = e.allGuess.get(guessIndex);
+        final ArrayList<boolean[]> possibles = new ArrayList<>();
+        final int[] guess = e.allGuess.get(guessIndex);
 
         generateAllPossibles(possibles, e.numberInOneGuess, guess[e.numberInOneGuess]);
         for (boolean[] possible : possibles) {
             ArrayList<PositionStatus> newStatus = copyPositionStatus(positions);
             boolean r = false;
-            if (isValid(possible, newStatus, guess, e.numberInOneGuess, e.numberRange)) {
+            if (isValid(possible, newStatus, guess, e.numberRange)) {
                 merge(newStatus, possible, guess);
-                r = testGuess( guessIndex + 1, newStatus, e);
+                r = testGuess(guessIndex + 1, newStatus, e);
             }
             if (r) {
                 StringBuilder sb = new StringBuilder();
@@ -237,7 +260,7 @@ public class Question001 {
         return false;
     }
 
-    private boolean testOneEvent(Event e) {
+    private boolean testOneEvent(final Event e) {
         ArrayList<PositionStatus> positions = new ArrayList<>();
 
         for (int i = 0; i < e.numberInOneGuess; i++) {

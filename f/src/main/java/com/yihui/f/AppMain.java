@@ -3,15 +3,25 @@ package com.yihui.f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.yihui.f.questions.Question001.test;
+import static com.yihui.f.questions.ShortestSuperstring.test;
 
-public class AppMain {
+/**
+ * Application main.
+ */
+public final class AppMain {
+    private AppMain() {
+    }
+
     /**
      * Logger.
      */
     public static Logger logger = LoggerFactory.getLogger("f");
 
-    public static void main(String[] args) {
+    /**
+     * Main method.
+     * @param args input.
+     */
+    public static void main(final String[] args) {
         test();
     }
 }

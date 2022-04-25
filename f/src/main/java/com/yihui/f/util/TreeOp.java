@@ -7,22 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Tree operation class.
+ */
 public final class TreeOp {
+    private TreeOp() {
+    }
 
+    /**
+     * TreeNode.
+     * @param <T> ..
+     */
     @Data
     public static class TreeNode<T> {
         T val;
         TreeNode<T> left;
         TreeNode<T> right;
 
-        public TreeNode(T t) {
+        /**
+         * construct.
+         * @param t ..
+         */
+        public TreeNode(final T t) {
             val = t;
             left = null;
             right = null;
         }
     }
 
-    public static String serialize(TreeNode<Integer> root) {
+    /**
+     * serialize.
+     * @param root ...
+     * @return ...
+     */
+    public static String serialize(final TreeNode<Integer> root) {
         StringBuilder sb = new StringBuilder();
 
         if (root == null) {
@@ -31,7 +49,7 @@ public final class TreeOp {
 
         List<TreeNode<Integer>> list = new ArrayList<>();
         list.add(root);
-        for (int i = 0; i < list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             TreeNode<Integer> n = list.get(i);
             if (n != null) {
                 list.add(n.getLeft());
@@ -53,7 +71,12 @@ public final class TreeOp {
         return sb.toString();
     }
 
-    public static TreeNode<Integer> deserialize(String str) {
+    /**
+     * deserialize tree.
+     * @param str ..
+     * @return ...
+     */
+    public static TreeNode<Integer> deserialize(final String str) {
         if (str.equals("{}")) {
             return null;
         }
@@ -82,7 +105,13 @@ public final class TreeOp {
         return root;
     }
 
-    public static int treeDepth(TreeNode<Integer> root) {
+
+    /**
+     * get depth.
+      * @param root ..
+     * @return ..
+     */
+    public static int treeDepth(final TreeNode<Integer> root) {
         if (root == null) {
             return 0;
         }
@@ -92,6 +121,9 @@ public final class TreeOp {
         return Math.max(left, right) + 1;
     }
 
+    /**
+     * test method.
+     */
     public static void test() {
         String source = "{3,9,20,#,#,15,7}";
         TreeNode<Integer> n = deserialize(source);
