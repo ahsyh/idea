@@ -33,6 +33,10 @@ public final class TreeOp {
             left = null;
             right = null;
         }
+
+        public boolean isLeaf() {
+            return left == null && right == null;
+        }
     }
 
     /**
