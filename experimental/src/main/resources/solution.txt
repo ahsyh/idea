@@ -1,0 +1,18 @@
+public class Case167 {
+    public static void main(String[] args) {
+        testOne();
+    }
+
+    private Case167() {
+    }
+
+    private static Solution s = new Solution();
+
+    private static void testOne() {
+
+    }
+
+    private static class Solution {
+
+    }
+}
