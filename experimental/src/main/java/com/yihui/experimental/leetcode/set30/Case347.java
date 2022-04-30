@@ -62,6 +62,7 @@ public class Case347 {
                 Ele e = q.poll();
                 r[i] = e.n;
             }
+            q.peek();
 
 
             return r;

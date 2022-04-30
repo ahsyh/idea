@@ -3,7 +3,7 @@ package com.yihui.experimental;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.yihui.experimental.leetcode.set10.Case179.test;
+import static com.yihui.experimental.leetcode.set20.Case207c.test;
 
 /*
  *
@@ -22,7 +22,7 @@ public final class AppMain {
      * @param args a
      */
     public static void main(final String[] args) {
-        test();
+        test(null);
     }
 
 }

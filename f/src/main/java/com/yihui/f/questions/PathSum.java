@@ -4,7 +4,9 @@ import com.yihui.f.util.Log;
 import com.yihui.f.util.TreeOp.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.yihui.f.util.TreeOp.deserialize;
 import static com.yihui.f.util.TreeOp.serialize;
@@ -43,7 +45,7 @@ public class PathSum {
     }
 
     public List<List<Integer>> pathSum(TreeNode<Integer> root, int sum) {
-        List<List<Integer>> allPaths  = new ArrayList<List<Integer>>();
+        List<List<Integer>> allPaths  = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
 
         if (root == null) {

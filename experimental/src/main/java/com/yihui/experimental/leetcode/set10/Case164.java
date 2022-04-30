@@ -58,7 +58,7 @@ public class Case164 {
 
             for (int i = 0; i < nums.length; i++) {
                 int n = nums[i];
-                int bucket = new Double((double)(n - listMin) / range).intValue();
+                int bucket = Double.valueOf((double)(n - listMin) / range).intValue();
                 if (bucket == bucketCount) {
                     bucket--;
                 }
