@@ -1,4 +1,4 @@
-package com.yihui.experimental.leetcode.set10;
+package com.yihui.experimental.leetcode.set00;
 
 import com.yihui.experimental.util.Log;
 

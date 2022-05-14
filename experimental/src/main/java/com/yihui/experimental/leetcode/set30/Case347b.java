@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class Case347 {
-
+public class Case347b {
     private static Solution s = new Solution();
 
     public static void test(String[] args) {
@@ -16,7 +15,7 @@ public class Case347 {
     }
 
     static class Solution {
-        private static class Ele implements Comparable<Ele> {
+        private static class Ele {
             public Integer n;
             public Integer feq;
 
@@ -25,17 +24,6 @@ public class Case347 {
                 this.feq = 1;
             }
 
-
-            @Override
-            public int compareTo(Ele o) {
-                if (feq > o.feq) {
-                    return -1;
-                } else if (feq == o.feq) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
         }
 
         public int[] topKFrequent(int[] nums, int k) {
@@ -51,7 +39,7 @@ public class Case347 {
                 }
             }
 
-            final PriorityQueue<Ele> q = new PriorityQueue<>();
+            final PriorityQueue<Ele> q = new PriorityQueue<>(m.size(), (a, b) -> b.feq - a.feq);
             for (Ele e : m.values()) {
                 q.offer(e);
             }

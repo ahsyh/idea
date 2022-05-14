@@ -16,7 +16,6 @@ public final class TreeOp {
 
     /**
      * TreeNode.
-     * @param <T> ..
      */
     @Data
     public static class TreeNode {

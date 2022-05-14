@@ -3,7 +3,7 @@ package com.yihui.f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.yihui.f.questions.PathSum.test;
+import static com.yihui.f.questions.QSort.test;
 
 /**
  * Application main.
