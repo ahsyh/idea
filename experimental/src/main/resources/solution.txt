@@ -1,19 +1,21 @@
-public class Case2 {
+import com.yihui.experimental.util.Log;
+
+public class Case1 {
     public static void test(String[] args) {
-        testOne();
+        int i = 0;
+        testOne(++i);
     }
 
     private static Solution s = new Solution();
 
-    private static void testOne() {
-
+    private static void testOne(int n) {
+        Log.e("case" + n, "");
     }
 
     private static class Solution {
 
     }
 }
-
 
 
 class Solution {
